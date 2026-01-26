@@ -1,18 +1,42 @@
 import { useParams } from "react-router-dom";
-import { galleryEvents } from "../data/galleryEvents";
+import { useEffect, useState } from "react";
+import API from "../utils/api";
 import EvolveraGallery from "./EvolveraGallery";
 
 export default function GalleryEvent() {
   const { slug } = useParams();
-  const event = galleryEvents.find(e => e.slug === slug);
+  const [gallery, setGallery] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!event) {
+  useEffect(() => {
+    API.get("/gallery")
+      .then((res) => {
+        const found = res.data.find((g) => g.slug === slug);
+        setGallery(found || null);
+      })
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  if (loading) {
     return (
       <div className="bg-black text-white min-h-screen flex items-center justify-center">
-        Event Not Found
+        Loading gallery...
       </div>
     );
   }
 
-  return <EvolveraGallery images={event.images} title={event.title} />;
+  if (!gallery) {
+    return (
+      <div className="bg-black text-white min-h-screen flex items-center justify-center">
+        Gallery not found
+      </div>
+    );
+  }
+
+  return (
+    <EvolveraGallery
+      title={gallery.title}
+      images={gallery.images}
+    />
+  );
 }

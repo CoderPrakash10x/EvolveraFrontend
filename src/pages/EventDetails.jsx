@@ -1,103 +1,159 @@
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, ArrowLeft, CheckCircle, Clock, Trophy } from "lucide-react";
-
-const eventContent = {
-  "tech-minds": {
-    title: "Tech Minds Summit 2025",
-    desc: "A flagship summit bringing together industry experts and tech enthusiasts to discuss future innovations and startups.",
-    date: "15th August 2025",
-    venue: "KIPM Campus (Offline)",
-    perks: ["Industry Networking", "Startup Showcase", "Certificates", "Hands-on Workshop"],
-    image: "/about.jpg" 
-  },
-  "innovation-carnival": {
-    title: "Innovation Carnival",
-    desc: "An inter-college competition showcasing project expos and awarding best innovations among students.",
-    date: "10th September 2025",
-    venue: "KIPM Campus (Offline)",
-    perks: ["Project Expo", "Alumni Networking", "Innovation Awards", "Collaboration"],
-    image: "/about.jpg"
-  },
-  "ai-bootcamp": {
-    title: "AI Bootcamp",
-    desc: "Deep dive into Artificial Intelligence and Machine Learning fundamentals with practical implementations.",
-    date: "Coming Soon",
-    venue: "Hybrid (Online/Offline)",
-    perks: ["ML Fundamentals", "Hands-on Coding", "Expert Mentorship"],
-    image: "/about.jpg"
-  }
-};
+import { Calendar, MapPin, ArrowLeft, CheckCircle, Trophy } from "lucide-react";
+import { getEventById } from "../services/event.service";
+import EventRegistrationForm from "../components/EventRegistrationForm";
 
 export default function EventDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const event = eventContent[id] || eventContent["tech-minds"];
+
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    getEventById(id)
+      .then(setEvent)
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) {
+    return <div className="text-white pt-40 text-center">Loading event...</div>;
+  }
+
+  if (!event) {
+    return <div className="text-white pt-40 text-center">Event not found</div>;
+  }
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
-      exit={{ opacity: 0 }}
-      className="min-h-screen bg-black text-white pt-32 pb-20 px-6"
-    >
-      <div className="max-w-6xl mx-auto">
-        {/* Back Link */}
-        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-orange-500 mb-8 font-bold uppercase text-xs tracking-widest">
-          <ArrowLeft size={16} /> Back to Home
-        </button>
+    <>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="min-h-screen bg-black text-white pt-32 pb-20 px-6"
+      >
+        <div className="max-w-6xl mx-auto">
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left: Content */}
-          <motion.div initial={{ x: -30 }} animate={{ x: 0 }}>
-            <span className="text-orange-500 font-black uppercase tracking-widest text-sm italic">Upcoming Event</span>
-            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] my-6">
-              {event.title}
-            </h1>
-            <p className="text-gray-400 text-lg leading-relaxed mb-8">{event.desc}</p>
-            
-            <div className="space-y-4 mb-10">
-              <div className="flex items-center gap-4 text-gray-300">
-                <Calendar className="text-orange-500" /> <span>{event.date}</span>
-              </div>
-              <div className="flex items-center gap-4 text-gray-300">
-                <MapPin className="text-orange-500" /> <span>{event.venue}</span>
-              </div>
-            </div>
+          {/* BACK */}
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-orange-500 mb-8 font-bold uppercase text-xs tracking-widest"
+          >
+            <ArrowLeft size={16} /> Back
+          </button>
 
-            <h3 className="text-xl font-bold uppercase mb-4 tracking-tight">Event Perks</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {event.perks.map((p, i) => (
-                <div key={i} className="flex items-center gap-2 bg-zinc-900/50 p-4 rounded-xl border border-white/5">
-                  <CheckCircle className="text-orange-500" size={18} />
-                  <span className="text-sm font-medium">{p}</span>
+          <div className="grid lg:grid-cols-2 gap-12">
+
+            {/* LEFT */}
+            <div>
+              <span className="text-orange-500 uppercase text-sm font-black">
+                Upcoming Event
+              </span>
+
+              <h1 className="text-5xl md:text-7xl font-black uppercase my-6">
+                {event.title}
+              </h1>
+
+              <p className="text-gray-400 mb-8">{event.description}</p>
+
+              <div className="space-y-4 mb-10">
+                <div className="flex items-center gap-4">
+                  <Calendar className="text-orange-500" />
+                  {event.eventDate
+                    ? new Date(event.eventDate).toDateString()
+                    : "Coming Soon"}
                 </div>
-              ))}
-            </div>
-          </motion.div>
+                <div className="flex items-center gap-4">
+                  <MapPin className="text-orange-500" />
+                  {event.location || "TBA"}
+                </div>
+              </div>
 
-          {/* Right: Action Card */}
-          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="sticky top-32">
-            <div className="bg-zinc-900 border border-orange-500/20 p-8 rounded-3xl relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 blur-3xl rounded-full" />
-               <h4 className="text-2xl font-bold mb-4">Ready to Join?</h4>
-               <p className="text-gray-400 text-sm mb-8">Don't miss the chance to be part of Evolvera's most awaited tech event.</p>
-               
-               <button className="w-full bg-orange-500 text-black py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-white transition-all shadow-xl shadow-orange-500/20">
-                  Register for this Event
-               </button>
-               
-               <div className="mt-8 pt-8 border-t border-white/10 flex items-center gap-4">
+              <h3 className="font-bold uppercase mb-4">Event Perks</h3>
+              <div className="grid md:grid-cols-2 gap-3">
+                <div className="flex items-center gap-2 bg-zinc-900 p-4 rounded-xl">
+                  <CheckCircle className="text-orange-500" size={18} />
+                  Certificates
+                </div>
+                <div className="flex items-center gap-2 bg-zinc-900 p-4 rounded-xl">
+                  <CheckCircle className="text-orange-500" size={18} />
+                  Networking
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT */}
+            <div className="sticky top-32">
+              <div className="bg-zinc-900 border border-orange-500/20 p-8 rounded-3xl">
+                <h4 className="text-2xl font-bold mb-4">Ready to Join?</h4>
+
+                <button
+                  onClick={() => setShowForm(true)}
+                  disabled={!event.isRegistrationOpen}
+                  className={`w-full py-4 rounded-2xl font-black uppercase transition
+                    ${
+                      event.isRegistrationOpen
+                        ? "bg-orange-500 text-black hover:bg-white"
+                        : "bg-zinc-700 text-gray-400 cursor-not-allowed"
+                    }`}
+                >
+                  {event.isRegistrationOpen
+                    ? "Register Now"
+                    : "Registration Closed"}
+                </button>
+
+                <div className="mt-8 pt-8 border-t border-white/10 flex gap-4">
                   <Trophy className="text-orange-500" size={32} />
                   <div>
-                    <p className="text-xs font-bold uppercase text-gray-500">Recognition</p>
-                    <p className="text-sm font-bold">Certificates for all attendees</p>
+                    <p className="text-xs text-gray-500 uppercase">
+                      Recognition
+                    </p>
+                    <p className="font-bold">
+                      Certificates for attendees
+                    </p>
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
-          </motion.div>
+
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+
+      {/* ================= REGISTRATION MODAL ================= */}
+     {showForm && (
+  <div className="fixed text-white inset-0 z-50 bg-black/80 flex items-center justify-center px-4">
+    
+    {/* MODAL CONTAINER */}
+    <div
+      className="bg-[#0d0d0d] p-8 rounded-3xl w-full max-w-md relative
+                 max-h-[90vh] overflow-y-auto"
+    >
+      {/* CLOSE BUTTON */}
+      <button
+        onClick={() => setShowForm(false)}
+        className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"
+      >
+        ✕
+      </button>
+
+      {/* TITLE */}
+      <h3 className="text-2xl font-black mb-6">
+        Register for{" "}
+        <span className="text-orange-500">{event.title}</span>
+      </h3>
+
+      {/* FORM */}
+      <EventRegistrationForm
+        event={event}
+        onClose={() => setShowForm(false)}
+      />
+    </div>
+  </div>
+)}
+
+    </>
   );
 }

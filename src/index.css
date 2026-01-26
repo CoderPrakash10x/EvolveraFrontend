@@ -182,3 +182,28 @@ body {
 .animate-pulseSlow {
   animation: pulseSlow 4s ease-in-out infinite;
 }
+
+
+.input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #181818;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #f97316;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #f97316;
+  margin-bottom: 0.5rem;
+  display: block;
+}
