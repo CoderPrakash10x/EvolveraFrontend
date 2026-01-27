@@ -89,19 +89,6 @@ export default function EventDetails() {
                 </div>
               </div>
 
-              <h3 className="font-bold uppercase mb-4">
-                Event Perks
-              </h3>
-              <div className="grid md:grid-cols-2 gap-3">
-                <div className="flex items-center gap-2 bg-zinc-900 p-4 rounded-xl">
-                  <CheckCircle className="text-orange-500" size={18} />
-                  Certificates
-                </div>
-                <div className="flex items-center gap-2 bg-zinc-900 p-4 rounded-xl">
-                  <CheckCircle className="text-orange-500" size={18} />
-                  Networking
-                </div>
-              </div>
             </div>
 
             {/* RIGHT */}
@@ -129,17 +116,7 @@ export default function EventDetails() {
                     : "Registration Closed"}
                 </button>
 
-                <div className="mt-8 pt-8 border-t border-white/10 flex gap-4">
-                  <Trophy className="text-orange-500" size={32} />
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase">
-                      Recognition
-                    </p>
-                    <p className="font-bold">
-                      Certificates for attendees
-                    </p>
-                  </div>
-                </div>
+                
               </div>
             </div>
 
