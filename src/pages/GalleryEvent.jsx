@@ -35,8 +35,9 @@ export default function GalleryEvent() {
 
   return (
     <EvolveraGallery
-      title={gallery.title}
-      images={gallery.images}
-    />
+  title={gallery.title}
+  images={gallery.images.map(img => img.url)}
+/>
+
   );
 }

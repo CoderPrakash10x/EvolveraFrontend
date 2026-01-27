@@ -26,7 +26,7 @@ const Navbar = () => {
           {/* Logo */}
           <NavLink to="/" onClick={() => setOpen(false)}>
             <img
-              src="/gallery/evolvera.png"
+              src="/evolvera.png"
               alt="Evolvera Logo"
               className="h-8 sm:h-9 object-contain"
             />

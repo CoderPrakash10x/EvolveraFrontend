@@ -7,163 +7,226 @@ import {
 } from "../../services/event.admin.service";
 import toast from "react-hot-toast";
 
-
 const CreateEvent = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const eventId = params.get("id");
 
+  const [loading, setLoading] = useState(false);
+  const [coverImage, setCoverImage] = useState(null);
+
   const [form, setForm] = useState({
     title: "",
     description: "",
     location: "",
-    price: 0,
     eventDate: "",
-    registrationDeadline: "",
-    isRegistrationOpen: true
+    registrationStartDate: "",
+    registrationEndDate: ""
   });
 
-  const [coverImage, setCoverImage] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  // ✅ EDIT MODE – SAFE FORM SET
+  /* ================= EDIT MODE ================= */
   useEffect(() => {
-    if (eventId) {
-      getAdminEvents().then((events) => {
-        const e = events.find((x) => x._id === eventId);
-        if (!e) return;
+    if (!eventId) return;
 
-        setForm({
-          title: e.title || "",
-          description: e.description || "",
-          location: e.location || "",
-          price: e.price || 0,
-          eventDate: e.eventDate ? e.eventDate.slice(0, 10) : "",
-          registrationDeadline: e.registrationDeadline
-            ? e.registrationDeadline.slice(0, 10)
-            : "",
-          isRegistrationOpen: e.isRegistrationOpen
-        });
+    getAdminEvents().then((events) => {
+      const e = events.find((x) => x._id === eventId);
+      if (!e) return;
+
+      setForm({
+        title: e.title || "",
+        description: e.description || "",
+        location: e.location || "",
+        eventDate: e.eventDate?.slice(0, 10) || "",
+        registrationStartDate:
+          e.registrationStartDate?.slice(0, 10) || "",
+        registrationEndDate:
+          e.registrationEndDate?.slice(0, 10) || ""
       });
-    }
+    });
   }, [eventId]);
 
+  /* ================= HANDLER ================= */
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value
-    }));
+    const { name, value } = e.target;
+    setForm((p) => ({ ...p, [name]: value }));
   };
 
+  /* ================= SUBMIT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const eventDate = new Date(form.eventDate);
+
+    // ❌ EVENT DATE IN PAST
+    if (eventDate < today) {
+      toast.error("Event date cannot be in the past");
+      setLoading(false);
+      return;
+    }
+
+    // ❌ REGISTRATION START AFTER EVENT
+    if (
+      form.registrationStartDate &&
+      new Date(form.registrationStartDate) > eventDate
+    ) {
+      toast.error("Registration start date cannot be after event date");
+      setLoading(false);
+      return;
+    }
+
+    // ❌ REGISTRATION END AFTER EVENT
+    if (
+      form.registrationEndDate &&
+      new Date(form.registrationEndDate) > eventDate
+    ) {
+      toast.error("Registration end date cannot be after event date");
+      setLoading(false);
+      return;
+    }
+
     try {
       const fd = new FormData();
 
-      // ✅ SAFE APPENDS
-      fd.append("title", form.title);
-      fd.append("description", form.description);
-      fd.append("location", form.location);
-      fd.append("price", Number(form.price) || 0);
-
-      if (form.eventDate) {
-        fd.append("eventDate", form.eventDate);
-      }
-
-      if (form.registrationDeadline) {
-        fd.append("registrationDeadline", form.registrationDeadline);
-      }
-
-      fd.append("isRegistrationOpen", form.isRegistrationOpen);
+      Object.entries(form).forEach(([k, v]) => {
+        if (v) fd.append(k, v);
+      });
 
       if (coverImage) {
         fd.append("coverImage", coverImage);
       }
 
       if (eventId) {
-  await updateAdminEvent(eventId, fd);
-  toast.success("Event updated successfully");
-} else {
-  await createAdminEvent(fd);
-  toast.success("Event created successfully");
-}
+        await updateAdminEvent(eventId, fd);
+        toast.success("Event updated successfully");
+      } else {
+        await createAdminEvent(fd);
+        toast.success("Event created successfully");
+      }
 
-navigate("/admin/events");
-
+      navigate("/admin/events");
     } catch (err) {
-  console.error("Save event error:", err);
-  toast.error(
-    err?.response?.data?.message || "Event save failed"
-  );
-} finally {
-  setLoading(false);
-}
-
+      toast.error(err?.response?.data?.message || "Save failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="max-w-3xl">
-      <h1 className="text-4xl font-black mb-10">
+    <div className="max-w-4xl">
+      <h1 className="text-4xl font-black mb-12">
         {eventId ? "Edit" : "Create"}{" "}
         <span className="text-orange-500">Event</span>
       </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-12">
 
-        <Input label="Title" name="title" value={form.title} onChange={handleChange} />
-        <Input label="Location" name="location" value={form.location} onChange={handleChange} />
-        <Input label="Price" type="number" name="price" value={form.price} onChange={handleChange} />
+        {/* ================= BASIC INFO ================= */}
+        <Section title="Basic Information">
+          <Field
+            label="Event Title"
+            name="title"
+            value={form.title}
+            onChange={handleChange}
+            placeholder="Eg. AI Bootcamp 2026"
+            required
+          />
 
-        <Input
-          label="Event Date"
-          type="date"
-          name="eventDate"
-          value={form.eventDate}
-          onChange={handleChange}
-        />
+          <Field
+            label="Location / Mode"
+            name="location"
+            value={form.location}
+            onChange={handleChange}
+            placeholder="Eg. Seminar Hall / Online"
+          />
 
-        <Input
-          label="Registration Deadline"
-          type="date"
-          name="registrationDeadline"
-          value={form.registrationDeadline}
-          onChange={handleChange}
-        />
+          <div>
+            <label className="block text-sm text-gray-400 mb-2">
+              Event Description
+            </label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              rows={5}
+              placeholder="Briefly explain what this event is about..."
+              className="w-full p-4 rounded-xl bg-zinc-900 border border-white/10 focus:outline-none focus:border-orange-500"
+            />
+          </div>
+        </Section>
 
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={form.description}
-          onChange={handleChange}
-          className="w-full p-4 rounded-xl bg-zinc-900 border border-white/10"
-        />
+        {/* ================= EVENT DATE ================= */}
+        <Section title="Event Schedule">
+          <Field
+            label="Event Date"
+            type="date"
+            name="eventDate"
+            value={form.eventDate}
+            onChange={handleChange}
+            min={new Date().toISOString().split("T")[0]}
+            required
+          />
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setCoverImage(e.target.files[0])}
-          className="text-sm text-gray-400"
-        />
+          {form.eventDate && (
+            <p className="text-sm text-gray-400">
+              Status Preview:{" "}
+              <span className="font-bold text-orange-400">
+                {new Date(form.eventDate).toDateString() ===
+                new Date().toDateString()
+                  ? "LIVE"
+                  : new Date(form.eventDate) > new Date()
+                  ? "UPCOMING"
+                  : "PAST"}
+              </span>
+            </p>
+          )}
+        </Section>
 
-        <label className="flex items-center gap-3 text-sm">
-          <input
-            type="checkbox"
-            name="isRegistrationOpen"
-            checked={form.isRegistrationOpen}
+        {/* ================= REGISTRATION ================= */}
+        <Section title="Registration Window">
+          <Field
+            label="Registration Start Date"
+            type="date"
+            name="registrationStartDate"
+            value={form.registrationStartDate}
             onChange={handleChange}
           />
-          Registration Open
-        </label>
 
-        <button
-          disabled={loading}
-          className="px-8 py-4 bg-orange-500 text-black font-black rounded-xl disabled:opacity-50"
-        >
-          {loading ? "Saving..." : "Save Event"}
-        </button>
+          <Field
+            label="Registration End Date"
+            type="date"
+            name="registrationEndDate"
+            value={form.registrationEndDate}
+            onChange={handleChange}
+          />
+        </Section>
+
+        {/* ================= IMAGE ================= */}
+        <Section title="Cover Image">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setCoverImage(e.target.files[0])}
+            className="text-sm text-gray-400"
+          />
+          <p className="text-xs text-gray-500 mt-2">
+            Recommended: Landscape poster / banner
+          </p>
+        </Section>
+
+        {/* ================= ACTION ================= */}
+        <div className="pt-6">
+          <button
+            disabled={loading}
+            className="px-10 py-4 bg-orange-500 text-black font-black rounded-xl
+                       disabled:opacity-50 hover:scale-105 transition"
+          >
+            {loading ? "Saving..." : "Save Event"}
+          </button>
+        </div>
       </form>
     </div>
   );
@@ -171,10 +234,26 @@ navigate("/admin/events");
 
 export default CreateEvent;
 
-const Input = ({ label, ...props }) => (
-  <input
-    {...props}
-    placeholder={label}
-    className="w-full p-4 rounded-xl bg-zinc-900 border border-white/10"
-  />
+/* ================= UI HELPERS ================= */
+
+const Section = ({ title, children }) => (
+  <div className="space-y-6">
+    <h3 className="text-xl font-bold text-orange-500">
+      {title}
+    </h3>
+    <div className="space-y-6">{children}</div>
+  </div>
+);
+
+const Field = ({ label, ...props }) => (
+  <div>
+    <label className="block text-sm text-gray-400 mb-2">
+      {label}
+    </label>
+    <input
+      {...props}
+      className="w-full p-4 rounded-xl bg-zinc-900 border border-white/10
+                 focus:outline-none focus:border-orange-500"
+    />
+  </div>
 );

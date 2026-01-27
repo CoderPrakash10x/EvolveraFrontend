@@ -36,7 +36,7 @@ export default function GalleryHome() {
                 <div className="group relative rounded-3xl overflow-hidden border border-white/10">
 
                   <img
-                    src={g.cover}
+                    src={g.cover.url}
                     alt={g.title}
                     className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />

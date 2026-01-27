@@ -55,9 +55,10 @@ const AdminLayout = () => {
             <Image size={18} /> Gallery
           </NavLink>
 
-          <NavLink to="/admin/team" className={linkClass}>
-            <Users size={18} /> Team
+          <NavLink to="/admin/contact" className={linkClass}>
+            <Image size={18} /> Contact
           </NavLink>
+
         </nav>
 
         {/* LOGOUT */}

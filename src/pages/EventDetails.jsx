@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, ArrowLeft, CheckCircle, Trophy } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  ArrowLeft,
+  CheckCircle,
+  Trophy,
+} from "lucide-react";
 import { getEventById } from "../services/event.service";
 import EventRegistrationForm from "../components/EventRegistrationForm";
+import { EVENT_BADGE } from "../utils/eventBadge";
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -20,11 +27,19 @@ export default function EventDetails() {
   }, [id]);
 
   if (loading) {
-    return <div className="text-white pt-40 text-center">Loading event...</div>;
+    return (
+      <div className="text-white pt-40 text-center">
+        Loading event...
+      </div>
+    );
   }
 
   if (!event) {
-    return <div className="text-white pt-40 text-center">Event not found</div>;
+    return (
+      <div className="text-white pt-40 text-center">
+        Event not found
+      </div>
+    );
   }
 
   return (
@@ -48,22 +63,25 @@ export default function EventDetails() {
 
             {/* LEFT */}
             <div>
-              <span className="text-orange-500 uppercase text-sm font-black">
-                Upcoming Event
+              {/* STATUS BADGE */}
+              <span
+                className={`uppercase text-sm font-black ${EVENT_BADGE[event.status].class}`}
+              >
+                {EVENT_BADGE[event.status].text}
               </span>
 
               <h1 className="text-5xl md:text-7xl font-black uppercase my-6">
                 {event.title}
               </h1>
 
-              <p className="text-gray-400 mb-8">{event.description}</p>
+              <p className="text-gray-400 mb-8">
+                {event.description}
+              </p>
 
               <div className="space-y-4 mb-10">
                 <div className="flex items-center gap-4">
                   <Calendar className="text-orange-500" />
-                  {event.eventDate
-                    ? new Date(event.eventDate).toDateString()
-                    : "Coming Soon"}
+                  {new Date(event.eventDate).toDateString()}
                 </div>
                 <div className="flex items-center gap-4">
                   <MapPin className="text-orange-500" />
@@ -71,7 +89,9 @@ export default function EventDetails() {
                 </div>
               </div>
 
-              <h3 className="font-bold uppercase mb-4">Event Perks</h3>
+              <h3 className="font-bold uppercase mb-4">
+                Event Perks
+              </h3>
               <div className="grid md:grid-cols-2 gap-3">
                 <div className="flex items-center gap-2 bg-zinc-900 p-4 rounded-xl">
                   <CheckCircle className="text-orange-500" size={18} />
@@ -87,10 +107,15 @@ export default function EventDetails() {
             {/* RIGHT */}
             <div className="sticky top-32">
               <div className="bg-zinc-900 border border-orange-500/20 p-8 rounded-3xl">
-                <h4 className="text-2xl font-bold mb-4">Ready to Join?</h4>
+                <h4 className="text-2xl font-bold mb-4">
+                  Ready to Join?
+                </h4>
 
+                {/* 🔥 FIXED REGISTRATION LOGIC */}
                 <button
-                  onClick={() => setShowForm(true)}
+                  onClick={() =>
+                    event.isRegistrationOpen && setShowForm(true)
+                  }
                   disabled={!event.isRegistrationOpen}
                   className={`w-full py-4 rounded-2xl font-black uppercase transition
                     ${
@@ -123,37 +148,30 @@ export default function EventDetails() {
       </motion.div>
 
       {/* ================= REGISTRATION MODAL ================= */}
-     {showForm && (
-  <div className="fixed text-white inset-0 z-50 bg-black/80 flex items-center justify-center px-4">
-    
-    {/* MODAL CONTAINER */}
-    <div
-      className="bg-[#0d0d0d] p-8 rounded-3xl w-full max-w-md relative
-                 max-h-[90vh] overflow-y-auto"
-    >
-      {/* CLOSE BUTTON */}
-      <button
-        onClick={() => setShowForm(false)}
-        className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"
-      >
-        ✕
-      </button>
+      {showForm && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-4 text-white">
+          <div className="bg-[#0d0d0d] p-8 rounded-3xl w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setShowForm(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"
+            >
+              ✕
+            </button>
 
-      {/* TITLE */}
-      <h3 className="text-2xl font-black mb-6">
-        Register for{" "}
-        <span className="text-orange-500">{event.title}</span>
-      </h3>
+            <h3 className="text-2xl font-black mb-6">
+              Register for{" "}
+              <span className="text-orange-500">
+                {event.title}
+              </span>
+            </h3>
 
-      {/* FORM */}
-      <EventRegistrationForm
-        event={event}
-        onClose={() => setShowForm(false)}
-      />
-    </div>
-  </div>
-)}
-
+            <EventRegistrationForm
+              event={event}
+              onClose={() => setShowForm(false)}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }

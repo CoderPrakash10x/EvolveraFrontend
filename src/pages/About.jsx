@@ -4,6 +4,7 @@ import { ArrowRight, Plus, Rocket, Cpu, Globe, Zap, Settings, Laptop } from "luc
 // Note: Ensure EvolveraValues component also follows the theme
 import EvolveraValues from "../components/utility/evlo";
 import OurBoardMembers from "../components/Ourboardmember";
+import { Link } from "react-router-dom";
 
 const EvolveraLanding = () => {
   const objectivesRef = useRef(null);
@@ -246,9 +247,9 @@ const EvolveraLanding = () => {
           impactful solutions.
         </p>
 
-        <button className="mx-auto px-6 py-3 rounded-full bg-orange-500 text-black font-semibold text-sm hover:scale-105 transition">
+       <Link to='/contact'> <button className="mx-auto px-6 py-3 rounded-full bg-orange-500 text-black font-semibold text-sm hover:scale-105 transition">
           Get Started ↗
-        </button>
+        </button></Link>
       </div>
 
       {/* Card 3 */}

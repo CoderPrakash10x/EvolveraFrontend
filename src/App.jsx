@@ -27,10 +27,10 @@ import CreateEvent from "./pages/admin/CreateEvent";
 import RegistrationsHome from "./pages/admin/RegistrationsHome";
 import RegistrationsByEvent from "./pages/admin/RegistrationsByEvent";
 import GalleryAdmin from "./pages/admin/Gallery";
-import TeamAdmin from "./pages/admin/Team";
 import CreateGallery from "./pages/admin/CreateGallery";
-import CreateTeamMember from "./pages/admin/CreateTeamMember";
-
+import AdminGalleryDetail from "./pages/admin/AdminGalleryDetail";
+import ContactMessages from "./pages/admin/ContactAdmin";
+import TeamPage from './pages/Team';
 /* ================= ROUTES ================= */
 function AnimatedRoutes() {
   const location = useLocation();
@@ -46,8 +46,8 @@ function AnimatedRoutes() {
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/gallery" element={<GalleryHome />} />
         <Route path="/gallery/:slug" element={<GalleryEvent />} />
-        <Route path="/team" element={<Team />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/team" element={<TeamPage />} />
 
         {/* ===== ADMIN LOGIN ===== */}
        <Route path="/admin/login" element={<Login />} />
@@ -71,8 +71,8 @@ function AnimatedRoutes() {
   <Route path="gallery" element={<GalleryAdmin />} />
   
         <Route path="gallery/create" element={<CreateGallery />} />
-  <Route path="team" element={<TeamAdmin />} />
-<Route path="team/create" element={<CreateTeamMember />} />
+        <Route path="/admin/gallery/:id" element={<AdminGalleryDetail />} />
+        <Route path="contact" element={<ContactMessages />} />
 </Route>
 
 

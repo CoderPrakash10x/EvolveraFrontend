@@ -5,7 +5,7 @@ const boardMembers = [
   {
     name: "Mr. Anurag Singh",
     role: "Assistant Professor",
-    image: "/gallery/anuragsir.png",
+    image: "/anuragsir.png",
     bio: "With over 8 years of teaching experience, Mr. Singh specializes in Natural Language Processing (NLP). He holds an M.Tech and is pursuing a Ph.D., guiding students toward advanced research and innovation in AI.",
     email: "anuragcse@kipm.edu.in",
     phone: "+91-9648368001",
@@ -13,7 +13,7 @@ const boardMembers = [
   {
     name: "Mr. Nitesh Kumar Jaiswal",
     role: "In-Charge – Training & Placement",
-    image: "/gallery/niteshsir.png",
+    image: "/niteshsir.png",
     bio: "KIPM’s T&P Cell connects students with industry through expert talks, visits, and training—building confidence, leadership, and career-ready skills.",
     email: "tpo.eng@kipm.edu.in",
     phone: "+91-9044514315",
