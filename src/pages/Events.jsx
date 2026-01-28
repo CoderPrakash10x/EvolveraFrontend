@@ -18,9 +18,6 @@ export default function Events() {
     getEvents().then(setEvents);
   }, []);
 
-  /* =========================
-     🔥 BACKEND-DRIVEN LOGIC
-     ========================= */
   const upcomingEvents = events.filter(
     (e) => e.status !== "past"
   );
@@ -46,8 +43,6 @@ export default function Events() {
   return (
     <section className="bg-black text-white min-h-screen py-24">
       <div className="max-w-7xl mx-auto px-6">
-
-        {/* ================= LIVE & UPCOMING ================= */}
         <div className="mb-32">
           <div className="flex items-center gap-4 mb-10">
             <span className="w-12 h-[2px] bg-orange-500"></span>
@@ -79,7 +74,6 @@ export default function Events() {
                                   : "hover:border-orange-500/50"
                               }`}
                 >
-                  {/* IMAGE */}
                   <div className="h-56 w-full overflow-hidden">
                     <img
                       src={event.coverImage || "/placeholder.jpg"}
@@ -88,16 +82,15 @@ export default function Events() {
                     />
                   </div>
 
-                  {/* CONTENT */}
                   <div className="p-8 flex justify-between items-start gap-6">
                     <div>
-                      {/* 🔥 STATUS BADGE */}
+                      {/* STATUS BADGE */}
                       <span
                         className={`text-[10px] px-3 py-1 rounded-full font-bold uppercase mb-3 
                                     inline-flex items-center gap-2
                                     ${EVENT_BADGE[event.status].class}`}
                       >
-                        {/* 🔴 LIVE DOT */}
+
                         {event.status === "live" && (
                           <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
@@ -140,7 +133,7 @@ export default function Events() {
           </div>
         </div>
 
-        {/* ================= PAST EVENTS ================= */}
+        {/* ================= PAST EVENTS hoga jab upcomming event khatam ho jayega wah past me chala jayega woooo ================= */}
         <div>
           <div className="flex items-center gap-4 mb-10">
             <span className="w-12 h-[2px] bg-gray-500"></span>

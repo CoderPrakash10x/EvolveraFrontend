@@ -22,11 +22,11 @@ const currentTeam = [
 ];
 
 /* =======================
-   PAST MEMBERS (WITH IMAGE)
+   PAST MEMBERS 
 ======================= */
 const pastMembers = [
   { role: "President", name: "Shivam Rai", img: "/Teams/Shivam Rai.jpeg" },
-  { role: "Vice President", name: "Najiya", img: "/Teams/Najiya.jpeg" },
+  { role: "Vice President", name: "Najiya", img: "/Teams/Najiya.jpeg" },// yaha inka image lagana hai aur public ke teams folder me photo rahega
   { role: "Secretary", name: "Mohammad Mughees", img: "/Teams/Mohammad Mughees.jpeg" },
   { role: "Deputy Secretary", name: "Badal Singh", img: "/Teams/Badal Singh.jpeg" },
   { role: "Technical Head", name: "Shubham Singh", img: "/Teams/Shubham Singh.jpeg" },
@@ -34,9 +34,6 @@ const pastMembers = [
   { role: "Project Head", name: "Shivesh Tiwari", img: "/Teams/Shivesh Tiwari.jpeg" }
 ];
 
-/* =======================
-   CARD COMPONENT
-======================= */
 const Card = ({ img, role, name, dept }) => (
   <div className="bg-zinc-900/80 rounded-2xl p-6 text-center border border-white/10
                   hover:border-orange-500/40 transition">
@@ -65,9 +62,7 @@ const EvolveraTeam = () => {
   return (
     <div className="bg-black text-white">
 
-      {/* =======================
-         CURRENT TEAM
-      ======================= */}
+     
       <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto text-center">
 
@@ -86,9 +81,7 @@ const EvolveraTeam = () => {
         </div>
       </section>
 
-      {/* =======================
-         PAST MEMBERS
-      ======================= */}
+     
       <section className="py-32 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto text-center">
 

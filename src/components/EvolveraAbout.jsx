@@ -31,7 +31,7 @@ const Faq = () => {
     <section className="bg-black text-white py-32 px-6">
       <div className="max-w-5xl mx-auto">
 
-        {/* Header */}
+       
         <div className="mb-20">
           <h2 className="text-5xl md:text-6xl font-black mb-6">
             Frequently Asked <span className="text-orange-500">Questions</span>
@@ -41,7 +41,7 @@ const Faq = () => {
           </p>
         </div>
 
-        {/* FAQ List */}
+       
         <div className="divide-y divide-white/10 border-t border-white/10">
           {faqs.map((item, i) => {
             const isOpen = openIndex === i;
@@ -64,7 +64,7 @@ const Faq = () => {
                   </span>
                 </button>
 
-                {/* Answer */}
+              
                 <div
                   className={`grid transition-all duration-300 ${
                     isOpen ? "grid-rows-[1fr] mt-4" : "grid-rows-[0fr]"

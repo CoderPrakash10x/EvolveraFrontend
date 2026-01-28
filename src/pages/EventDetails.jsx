@@ -61,7 +61,6 @@ export default function EventDetails() {
 
           <div className="grid lg:grid-cols-2 gap-12">
 
-            {/* LEFT */}
             <div>
               {/* STATUS BADGE */}
               <span
@@ -98,7 +97,6 @@ export default function EventDetails() {
                   Ready to Join?
                 </h4>
 
-                {/* 🔥 FIXED REGISTRATION LOGIC */}
                 <button
                   onClick={() =>
                     event.isRegistrationOpen && setShowForm(true)

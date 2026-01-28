@@ -58,7 +58,7 @@ const EvolveraValues = () => {
             </div>
           </div>
 
-          {/* Right Column: Featured Blue Card (Changed to Orange/Dark Theme) */}
+          {/* Right Column*/}
           <div className="bg-orange-500 p-10 md:p-14 rounded-[3rem] text-black h-full flex flex-col justify-center">
             <div className="flex justify-between items-center mb-8">
               <span className="text-xs font-black uppercase tracking-widest border-b-2 border-black pb-1">ABOUT US</span>
@@ -76,7 +76,7 @@ const EvolveraValues = () => {
           </div>
         </div>
 
-        {/* --- Stats Bar (Bottom) --- */}
+        {/* --- Stats Bar--- */}
         <div className="border border-white/20 rounded-full py-8 px-10 md:px-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-white/10">
             {stats.map((stat, index) => (
@@ -94,7 +94,7 @@ const EvolveraValues = () => {
 
       </div>
       
-      {/* Page Footer Marker */}
+      {/* Page Footer */}
       <div className="mt-20 text-center text-[10px] uppercase tracking-widest text-gray-700">
         Evolvera Studio • Vision 2026
       </div>

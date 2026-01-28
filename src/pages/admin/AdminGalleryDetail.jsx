@@ -10,7 +10,7 @@ const AdminGalleryDetail = () => {
   const [progress, setProgress] = useState(0);
   const [success, setSuccess] = useState(false);
 
-  // ✅ ONLY GET DATA HERE
+  
   const load = async () => {
     const res = await API.get(`/gallery/admin/${id}`);
     setGallery(res.data);
@@ -20,7 +20,7 @@ const AdminGalleryDetail = () => {
     load();
   }, [id]);
 
-  // ✅ ADD IMAGES
+ 
   const addImages = async () => {
     if (images.length === 0) return;
 
@@ -54,7 +54,7 @@ const AdminGalleryDetail = () => {
   return (
     <div className="space-y-12">
 
-      {/* Header */}
+      
       <div>
         <h1 className="text-4xl font-black">{gallery.title}</h1>
         <p className="text-white/50 text-sm mt-2">
@@ -62,7 +62,7 @@ const AdminGalleryDetail = () => {
         </p>
       </div>
 
-      {/* Cover */}
+      
       <div>
         <p className="mb-2 text-sm text-white/60">Cover Image</p>
         <img
@@ -97,7 +97,7 @@ const AdminGalleryDetail = () => {
 
         {success && (
           <p className="text-green-400 text-sm font-semibold">
-            ✅ Images uploaded successfully
+            Images uploaded successfully
           </p>
         )}
 

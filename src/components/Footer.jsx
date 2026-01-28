@@ -4,12 +4,12 @@ export default function Footer() {
   return (
     <footer className="relative bg-[#0b0b0b] text-gray-400 px-6 md:px-16 pt-20 pb-10">
 
-      {/* subtle top divider glow */}
+      
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/40 to-transparent" />
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-14">
 
-        {/* BRAND */}
+        
         <div className="space-y-4">
           <Link
             to="/"
@@ -24,7 +24,7 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* QUICK LINKS */}
+      
         <div>
           <h3 className="text-white font-semibold mb-5 tracking-wide">
             Quick Links
@@ -49,7 +49,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* CONTACT */}
+       
         <div>
           <h3 className="text-white font-semibold mb-5 tracking-wide">
             Contact
@@ -91,7 +91,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* SOCIALS */}
+       
         <div>
           <h3 className="text-white font-semibold mb-5 tracking-wide">
             Follow Us
@@ -117,7 +117,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* BOTTOM BAR */}
       <div className="mt-16 pt-6 border-t border-white/10 text-center text-xs text-gray-500">
         © {new Date().getFullYear()} Evolvera Club. All rights reserved.
       </div>

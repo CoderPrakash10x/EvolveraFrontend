@@ -78,7 +78,7 @@ const Events = () => {
                 key={e._id}
                 className="border-t border-white/5 hover:bg-zinc-900/40 transition"
               >
-                {/* IMAGE */}
+        
                 <td className="p-4">
                   {e.coverImage ? (
                     <img
@@ -91,17 +91,15 @@ const Events = () => {
                   )}
                 </td>
 
-                {/* TITLE */}
                 <td className="p-4 font-semibold">{e.title}</td>
 
-                {/* DATE */}
                 <td className="p-4 text-gray-400">
                   {e.eventDate
                     ? new Date(e.eventDate).toLocaleDateString()
                     : "—"}
                 </td>
 
-                {/* STATUS */}
+      
                 <td className="p-4">
                   {e.isRegistrationOpen ? (
                     <span className="px-3 py-1 text-xs bg-green-500/20 text-green-400 rounded-full">
@@ -114,7 +112,7 @@ const Events = () => {
                   )}
                 </td>
 
-                {/* ACTIONS */}
+                
                 <td className="p-4 flex gap-3 justify-center">
                   <button
                     onClick={() =>

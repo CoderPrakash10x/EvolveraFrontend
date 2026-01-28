@@ -21,7 +21,6 @@ const Dashboard = () => {
         Admin <span className="text-orange-500">Dashboard</span>
       </h1>
 
-      {/* ===== STATS CARDS ===== */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
 
         <StatCard title="Total Events" value={stats.length} />
@@ -30,7 +29,6 @@ const Dashboard = () => {
 
       </div>
 
-      {/* ===== EVENT REGISTRATIONS ===== */}
       <div className="bg-zinc-900 border border-white/10 rounded-2xl p-6">
         <h2 className="text-xl font-bold mb-6">
           Event-wise Registrations

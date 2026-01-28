@@ -62,7 +62,7 @@ export default function UpcomingEvents() {
     .filter(
       (e) => e.eventDate && new Date(e.eventDate) >= now
     )
-    .slice(0, 3); // 👈 sirf top 3 home page pe
+    .slice(0, 4); 
 
   return (
     <section className="bg-black text-white py-24 px-6 md:px-16">

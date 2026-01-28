@@ -30,14 +30,14 @@ const AdminLayout = () => {
       {/* ===== SIDEBAR ===== */}
       <aside className="w-64 border-r border-white/10 p-6 flex flex-col">
         
-        {/* LOGO */}
+       
         <div className="mb-10">
           <h1 className="text-2xl font-black tracking-tight">
             Evolvera <span className="text-orange-500">Admin</span>
           </h1>
         </div>
 
-        {/* NAV */}
+        
         <nav className="flex-1 space-y-2">
           <NavLink to="/admin" end className={linkClass}>
             <LayoutDashboard size={18} /> Dashboard
@@ -72,7 +72,7 @@ const AdminLayout = () => {
         </button>
       </aside>
 
-      {/* ===== CONTENT ===== */}
+      
       <main className="flex-1 p-10 overflow-y-auto">
         <Outlet />
       </main>

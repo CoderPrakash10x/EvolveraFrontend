@@ -72,7 +72,7 @@ const CreateGallery = () => {
 
         {success && (
           <p className="text-green-400 text-sm font-semibold">
-            ✅ Gallery created successfully
+            Gallery created successfully
           </p>
         )}
 

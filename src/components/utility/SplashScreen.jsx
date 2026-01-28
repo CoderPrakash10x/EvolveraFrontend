@@ -4,12 +4,12 @@ export default function SplashScreen() {
   return (
     <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center">
       
-      {/* glow background */}
+      
       <div className="absolute w-80 h-80 bg-orange-500/20 blur-[140px] rounded-full" />
 
-      {/* Evolvera Image */}
+      
       <motion.img
-        src="/evolvera.png"   // 🔴 yaha apni image / logo ka path
+        src="/evolvera.png"   
         alt="Evolvera Club"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}

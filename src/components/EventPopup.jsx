@@ -54,9 +54,9 @@ const EventPopup = ({ events = [] }) => {
               ✕
             </button>
 
-            {/* CONTENT */}
+           
             <div className="p-8 text-white">
-              {/* HEADER */}
+              
               <h2 className="text-2xl font-black mb-2">
                 Upcoming <span className="text-orange-500">Events</span>
               </h2>
@@ -64,7 +64,7 @@ const EventPopup = ({ events = [] }) => {
                 Don’t miss what Evolvera is bringing next 🚀
               </p>
 
-              {/* EVENT LIST */}
+              
               <div className="space-y-4 mb-8">
                 {events.map((e) => (
                   <div
@@ -96,7 +96,7 @@ const EventPopup = ({ events = [] }) => {
                 ))}
               </div>
 
-              {/* CTA */}
+              
               <Link
                 to="/events"
                 className="group flex items-center justify-center gap-2

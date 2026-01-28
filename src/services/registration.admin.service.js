@@ -6,7 +6,7 @@ export const exportRegistrationsExcel = (eventId) => {
     return;
   }
 
-  const url = `http://localhost:5000/api/admin/export/registrations/${eventId}?token=${token}`;
+  const url = `https://evolverabackend.onrender.com/api/admin/export/registrations/${eventId}?token=${token}`;
 
   window.open(url, "_blank");
 };

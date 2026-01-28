@@ -50,7 +50,7 @@ const EvolveraLanding = () => {
   return (
     <div className="bg-[#000000] text-white min-h-screen font-['Poppins'] selection:bg-orange-500 selection:text-black">
        <section className="py-28 px-6 min-h-screen flex flex-col justify-center">
-      {/* TOP BAR - Black & Orange Theme */}
+
 
 
       {/* HERO SECTION */}
@@ -76,7 +76,6 @@ const EvolveraLanding = () => {
         </p>
       </section>
 
-      {/* MODERN COLLABORATION */}
       <section className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-16 py-32 border-t border-orange-500/10">
         <div className="md:col-span-5 relative h-[450px]">
           <div className="absolute top-0 left-0 w-4/5 h-4/5 overflow-hidden rounded-2xl border border-orange-500/20">
@@ -114,17 +113,14 @@ const EvolveraLanding = () => {
         <OurBoardMembers/>
       </section>
 
-      {/* BRANCH-WISE CONTRIBUTION (New Section) */}
-      {/* BRANCH-WISE CONTRIBUTION - PREMIUM LOOK */}
 <section className="relative py-36 px-6 bg-black overflow-hidden font-['Poppins']">
 
-  {/* Ambient Background Lights */}
   <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[180px]" />
   <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[140px]" />
 
   <div className="max-w-7xl mx-auto relative z-10">
 
-    {/* HEADER */}
+
     <div className="text-center mb-28">
       <motion.span
         initial={{ opacity: 0, y: 20 }}
@@ -144,7 +140,7 @@ const EvolveraLanding = () => {
       </h3>
     </div>
 
-    {/* CARDS */}
+
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14">
       {branches.map((branch, i) => (
         <motion.div
@@ -156,16 +152,13 @@ const EvolveraLanding = () => {
           whileHover={{ y: -14 }}
           className="relative group"
         >
-          {/* Soft Outer Glow */}
+
           <div className="absolute inset-0 rounded-3xl bg-orange-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-          {/* Card */}
           <div className="relative h-full p-10 rounded-3xl bg-gradient-to-b from-[#0f0f0f] to-[#090909] border border-white/10 backdrop-blur-xl overflow-hidden transition-all duration-500 group-hover:border-orange-500/50">
 
-            {/* Animated Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-            {/* Icon */}
             <div className="relative mb-10 inline-flex items-center justify-center">
               <div className="absolute w-16 h-16 rounded-full bg-orange-500/30 blur-xl scale-0 group-hover:scale-150 transition-transform duration-700" />
               <div className="relative text-orange-500 text-4xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
@@ -173,17 +166,17 @@ const EvolveraLanding = () => {
               </div>
             </div>
 
-            {/* Title */}
+           
             <h4 className="text-xl font-bold tracking-tight mb-4 transition-colors duration-500 group-hover:text-orange-500">
               {branch.name}
             </h4>
 
-            {/* Description */}
+           
             <p className="text-sm text-gray-500 leading-relaxed transition-colors duration-500 group-hover:text-gray-300">
               {branch.text}
             </p>
 
-            {/* Bottom Progress Line */}
+          
             <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-orange-500 to-orange-300 group-hover:w-full transition-all duration-700" />
           </div>
         </motion.div>
@@ -193,8 +186,6 @@ const EvolveraLanding = () => {
 </section>
 
 
-      {/* OBJECTIVES - Black & Orange Inverse */}
-   {/* OBJECTIVES - PREMIUM INDUSTRIAL LOOK */}
 <section className="relative bg-black py-32 px-6 overflow-hidden font-['Poppins']">
   {/* Ambient Glow */}
   <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[180px]" />
@@ -224,7 +215,7 @@ const EvolveraLanding = () => {
     {/* Cards */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-      {/* Card 1 */}
+
       <div className="group relative bg-[#0d0d0d] rounded-3xl p-6 border border-white/5 hover:border-orange-500/40 transition-all">
         <div className="h-44 rounded-2xl bg-gradient-to-br from-orange-500/30 to-orange-600/10 mb-6" />
         <h3 className="text-lg font-semibold text-white mb-2">
@@ -252,7 +243,6 @@ const EvolveraLanding = () => {
         </button></Link>
       </div>
 
-      {/* Card 3 */}
       <div className="group relative bg-[#0d0d0d] rounded-3xl p-6 border border-white/5 hover:border-orange-500/40 transition-all">
         <div className="h-44 rounded-2xl bg-gradient-to-br from-orange-500/30 to-orange-600/10 mb-6" />
         <h3 className="text-lg font-semibold text-white mb-2">
@@ -269,7 +259,7 @@ const EvolveraLanding = () => {
 </section>
 
 
-      {/* PLANNED ACTIVITIES (New Section) */}
+      {/* PLANNED ACTIVITIES */}
       <section className="py-32 px-6 bg-black">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-16 tracking-tight">PLANNED <span className="text-orange-500">ACTIVITIES</span></h2>

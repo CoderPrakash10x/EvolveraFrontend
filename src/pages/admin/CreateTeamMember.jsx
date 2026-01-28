@@ -135,7 +135,6 @@ const CreateTeamMember = () => {
 
 export default CreateTeamMember;
 
-/* ---------- UI Helpers ---------- */
 const Input = ({ label, ...props }) => (
   <div>
     <label className="label">{label}</label>

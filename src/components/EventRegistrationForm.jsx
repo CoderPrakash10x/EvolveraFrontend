@@ -17,7 +17,7 @@ export default function EventRegistrationForm({ event, onClose }) {
   const [teamName, setTeamName] = useState("");
   const [members, setMembers] = useState([]);
 
-  /* ---------------- HANDLERS ---------------- */
+
 
   const handleLeaderChange = (e) => {
     setLeader({ ...leader, [e.target.name]: e.target.value });
@@ -37,7 +37,6 @@ export default function EventRegistrationForm({ event, onClose }) {
     setMembers(updated);
   };
 
-  /* ---------------- SUBMIT ---------------- */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +65,6 @@ export default function EventRegistrationForm({ event, onClose }) {
     }
   };
 
-  /* ---------------- UI ---------------- */
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

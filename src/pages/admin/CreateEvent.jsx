@@ -24,7 +24,7 @@ const CreateEvent = () => {
     registrationEndDate: ""
   });
 
-  /* ================= EDIT MODE ================= */
+
   useEffect(() => {
     if (!eventId) return;
 
@@ -45,13 +45,10 @@ const CreateEvent = () => {
     });
   }, [eventId]);
 
-  /* ================= HANDLER ================= */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((p) => ({ ...p, [name]: value }));
   };
-
-  /* ================= SUBMIT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -61,14 +58,15 @@ const CreateEvent = () => {
 
     const eventDate = new Date(form.eventDate);
 
-    // ❌ EVENT DATE IN PAST
+    // EVENT DATE IN PAST
     if (eventDate < today) {
       toast.error("Event date cannot be in the past");
       setLoading(false);
       return;
     }
 
-    // ❌ REGISTRATION START AFTER EVENT
+    //Registrationstart date for event wowoowo
+
     if (
       form.registrationStartDate &&
       new Date(form.registrationStartDate) > eventDate
@@ -78,7 +76,7 @@ const CreateEvent = () => {
       return;
     }
 
-    // ❌ REGISTRATION END AFTER EVENT
+  //registration end date for event
     if (
       form.registrationEndDate &&
       new Date(form.registrationEndDate) > eventDate
@@ -124,7 +122,6 @@ const CreateEvent = () => {
 
       <form onSubmit={handleSubmit} className="space-y-12">
 
-        {/* ================= BASIC INFO ================= */}
         <Section title="Basic Information">
           <Field
             label="Event Title"
@@ -158,7 +155,6 @@ const CreateEvent = () => {
           </div>
         </Section>
 
-        {/* ================= EVENT DATE ================= */}
         <Section title="Event Schedule">
           <Field
             label="Event Date"
@@ -185,7 +181,6 @@ const CreateEvent = () => {
           )}
         </Section>
 
-        {/* ================= REGISTRATION ================= */}
         <Section title="Registration Window">
           <Field
             label="Registration Start Date"
@@ -204,7 +199,6 @@ const CreateEvent = () => {
           />
         </Section>
 
-        {/* ================= IMAGE ================= */}
         <Section title="Cover Image">
           <input
             type="file"
@@ -217,7 +211,6 @@ const CreateEvent = () => {
           </p>
         </Section>
 
-        {/* ================= ACTION ================= */}
         <div className="pt-6">
           <button
             disabled={loading}
@@ -233,8 +226,6 @@ const CreateEvent = () => {
 };
 
 export default CreateEvent;
-
-/* ================= UI HELPERS ================= */
 
 const Section = ({ title, children }) => (
   <div className="space-y-6">

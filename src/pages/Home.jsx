@@ -12,16 +12,12 @@ import EvolveraAbout from "../components/EvolveraAbout";
 const Home = () => {
   const [events, setEvents] = useState([]);
 
-  /* =========================
-     🔥 FETCH EVENTS FOR POPUP
-     ========================= */
+ 
   useEffect(() => {
     getEvents().then(setEvents);
   }, []);
 
-  /* =========================
-     🎯 NEAREST UPCOMING EVENT
-     ========================= */
+
   const popupEvent = events
   .filter((e) => {
     const today = new Date();
@@ -45,14 +41,13 @@ const Home = () => {
 
   return (
     <>
-      {/* 🔥 POPUP (15 DAYS LOGIC INSIDE COMPONENT) */}
+      {/* POPUP  */}
       <HomeEventPopup events={popupEvent} />
 
       <Hero />
       <AboutSection />
       <UpcomingEvents />
 
-      {/* ================= DREAMS & INNOVATION ================= */}
       <section className="bg-black text-white py-32 px-6 overflow-hidden font-['Poppins']">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
