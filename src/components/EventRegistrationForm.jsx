@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { registerForEvent } from "../services/registration.service";
 
 export default function EventRegistrationForm({ event, onClose }) {
   const [loading, setLoading] = useState(false);
 
+  // 🔥 default based on event setting
   const [registrationType, setRegistrationType] = useState("individual");
 
   const [leader, setLeader] = useState({
@@ -17,13 +18,29 @@ export default function EventRegistrationForm({ event, onClose }) {
   const [teamName, setTeamName] = useState("");
   const [members, setMembers] = useState([]);
 
+  /* ================= AUTO MODE LOCK ================= */
+  useEffect(() => {
+    if (event.registrationMode === "team") {
+      setRegistrationType("team");
+    }
+    if (event.registrationMode === "individual") {
+      setRegistrationType("individual");
+    }
+  }, [event.registrationMode]);
 
-
+  /* ================= HANDLERS ================= */
   const handleLeaderChange = (e) => {
     setLeader({ ...leader, [e.target.name]: e.target.value });
   };
 
   const addMember = () => {
+    if (
+      event.maxTeamSize &&
+      members.length + 1 >= event.maxTeamSize
+    ) {
+      toast.error(`Max team size is ${event.maxTeamSize}`);
+      return;
+    }
     setMembers([...members, { name: "", email: "", phone: "" }]);
   };
 
@@ -37,9 +54,48 @@ export default function EventRegistrationForm({ event, onClose }) {
     setMembers(updated);
   };
 
-
+  /* ================= SUBMIT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // BASIC VALIDATION
+    if (!leader.name || !leader.email) {
+      toast.error("Leader name & email are required");
+      return;
+    }
+
+    if (registrationType === "team") {
+      if (!teamName.trim()) {
+        toast.error("Team name is required");
+        return;
+      }
+
+      const totalMembers = members.length + 1;
+
+      if (
+        event.minTeamSize &&
+        totalMembers < event.minTeamSize
+      ) {
+        toast.error(`Minimum team size is ${event.minTeamSize}`);
+        return;
+      }
+
+      if (
+        event.maxTeamSize &&
+        totalMembers > event.maxTeamSize
+      ) {
+        toast.error(`Maximum team size is ${event.maxTeamSize}`);
+        return;
+      }
+
+      for (const m of members) {
+        if (!m.name || !m.email) {
+          toast.error("All team members must have name & email");
+          return;
+        }
+      }
+    }
+
     setLoading(true);
 
     try {
@@ -65,36 +121,38 @@ export default function EventRegistrationForm({ event, onClose }) {
     }
   };
 
-
+  /* ================= UI ================= */
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
 
-      {/* REGISTRATION TYPE */}
-      <div className="flex gap-4 text-sm font-bold">
-        <button
-          type="button"
-          onClick={() => setRegistrationType("individual")}
-          className={`px-4 py-2 rounded-xl ${
-            registrationType === "individual"
-              ? "bg-orange-500 text-black"
-              : "bg-zinc-800 text-gray-400"
-          }`}
-        >
-          Individual
-        </button>
+      {/* REGISTRATION TYPE SWITCH */}
+      {event.registrationMode === "both" && (
+        <div className="flex gap-4 text-sm font-bold">
+          <button
+            type="button"
+            onClick={() => setRegistrationType("individual")}
+            className={`px-4 py-2 rounded-xl ${
+              registrationType === "individual"
+                ? "bg-orange-500 text-black"
+                : "bg-zinc-800 text-gray-400"
+            }`}
+          >
+            Individual
+          </button>
 
-        <button
-          type="button"
-          onClick={() => setRegistrationType("team")}
-          className={`px-4 py-2 rounded-xl ${
-            registrationType === "team"
-              ? "bg-orange-500 text-black"
-              : "bg-zinc-800 text-gray-400"
-          }`}
-        >
-          Team
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={() => setRegistrationType("team")}
+            className={`px-4 py-2 rounded-xl ${
+              registrationType === "team"
+                ? "bg-orange-500 text-black"
+                : "bg-zinc-800 text-gray-400"
+            }`}
+          >
+            Team
+          </button>
+        </div>
+      )}
 
       {/* TEAM NAME */}
       {registrationType === "team" && (
@@ -103,7 +161,7 @@ export default function EventRegistrationForm({ event, onClose }) {
           value={teamName}
           onChange={(e) => setTeamName(e.target.value)}
           required
-          className="w-full p-3 rounded-xl bg-zinc-900 border border-white/10"
+          className="input"
         />
       )}
 
@@ -116,10 +174,12 @@ export default function EventRegistrationForm({ event, onClose }) {
       {/* TEAM MEMBERS */}
       {registrationType === "team" && (
         <div className="space-y-3">
-          <p className="text-sm text-gray-400 font-bold">Team Members</p>
+          <p className="text-sm text-gray-400 font-bold">
+            Team Members ({members.length + 1} total)
+          </p>
 
           {members.map((m, i) => (
-            <div key={i} className="grid grid-cols-1 gap-2 bg-zinc-900 p-3 rounded-xl">
+            <div key={i} className="grid gap-2 bg-zinc-900 p-3 rounded-xl">
               <input placeholder="Name" onChange={(e) => handleMemberChange(i, "name", e.target.value)} className="input" />
               <input placeholder="Email" onChange={(e) => handleMemberChange(i, "email", e.target.value)} className="input" />
               <input placeholder="Phone" onChange={(e) => handleMemberChange(i, "phone", e.target.value)} className="input" />
@@ -146,7 +206,6 @@ export default function EventRegistrationForm({ event, onClose }) {
   );
 }
 
-/* SMALL HELPER */
+/* ================= SMALL HELPER ================= */
 const inputClass =
   "w-full p-3 rounded-xl bg-zinc-900 border border-white/10";
-

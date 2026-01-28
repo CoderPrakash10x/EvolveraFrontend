@@ -1,12 +1,36 @@
-export const exportRegistrationsExcel = (eventId) => {
-  const token = localStorage.getItem("token");
+import API from "../utils/api";
 
-  if (!token || !eventId) {
-    console.error("Token or Event ID missing");
-    return;
+export const exportRegistrationsExcel = async (eventId) => {
+  try {
+    const res = await API.get(
+      `/admin/registrations/${eventId}/export`,
+      { responseType: "blob" }
+    );
+
+    // 🧠 create downloadable file
+    const blob = new Blob([res.data], {
+      type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "registrations.xlsx"; // filename
+    document.body.appendChild(a);
+    a.click();
+
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
-
-  const url = `https://evolverabackend.onrender.com/api/admin/export/registrations/${eventId}?token=${token}`;
-
-  window.open(url, "_blank");
 };
+
+export const deleteRegistration = (id) =>
+  API.delete(`/admin/registrations/${id}`);
+
+export const toggleApproval = (id) =>
+  API.patch(`/admin/registrations/${id}/approve`);

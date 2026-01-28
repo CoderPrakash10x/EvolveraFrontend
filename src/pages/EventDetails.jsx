@@ -5,8 +5,8 @@ import {
   Calendar,
   MapPin,
   ArrowLeft,
-  CheckCircle,
   Trophy,
+  CheckCircle,
 } from "lucide-react";
 import { getEventById } from "../services/event.service";
 import EventRegistrationForm from "../components/EventRegistrationForm";
@@ -61,6 +61,7 @@ export default function EventDetails() {
 
           <div className="grid lg:grid-cols-2 gap-12">
 
+            {/* LEFT */}
             <div>
               {/* STATUS BADGE */}
               <span
@@ -88,6 +89,18 @@ export default function EventDetails() {
                 </div>
               </div>
 
+              {/* 🔥 EXTRA DETAILS */}
+              {event.skills?.length > 0 && (
+                <DetailBlock title="Skills Required" items={event.skills} />
+              )}
+
+              {event.perks?.length > 0 && (
+                <DetailBlock title="Perks & Benefits" items={event.perks} />
+              )}
+
+              {event.rules?.length > 0 && (
+                <DetailBlock title="Rules" items={event.rules} />
+              )}
             </div>
 
             {/* RIGHT */}
@@ -118,10 +131,10 @@ export default function EventDetails() {
                   <Trophy className="text-orange-500" size={32} />
                   <div>
                     <p className="text-xs text-gray-500 uppercase">
-                      Welcome
+                      Organized by
                     </p>
                     <p className="font-bold">
-                      Evolvera club
+                      Evolvera Club
                     </p>
                   </div>
                 </div>
@@ -160,3 +173,21 @@ export default function EventDetails() {
     </>
   );
 }
+
+/* ================= SMALL COMPONENT ================= */
+
+const DetailBlock = ({ title, items }) => (
+  <div className="mb-10">
+    <h4 className="text-xl font-bold mb-4 text-orange-500">
+      {title}
+    </h4>
+    <ul className="space-y-2">
+      {items.map((item, i) => (
+        <li key={i} className="flex gap-3 text-gray-300">
+          <CheckCircle className="text-orange-500 mt-1" size={18} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
