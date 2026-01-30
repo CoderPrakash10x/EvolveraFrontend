@@ -68,19 +68,27 @@ export default function Events() {
                   whileHover={{ scale: 1.02 }}
                   className={`bg-zinc-900/40 border border-white/5 rounded-3xl
                               overflow-hidden transition-all
-                              ${
-                                event.status === "live"
-                                  ? "border-red-500/50 shadow-[0_0_40px_rgba(239,68,68,0.35)]"
-                                  : "hover:border-orange-500/50"
-                              }`}
+                              ${event.status === "live"
+                      ? "border-red-500/50 shadow-[0_0_40px_rgba(239,68,68,0.35)]"
+                      : "hover:border-orange-500/50"
+                    }`}
                 >
-                  <div className="h-56 w-full overflow-hidden">
+                  <div className="w-full bg-black rounded-t-3xl overflow-hidden">
                     <img
                       src={event.coverImage || "/placeholder.jpg"}
                       alt={event.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="
+      w-full 
+      aspect-[16/9]
+      object-contain
+      bg-black
+      transition-transform 
+      duration-500 
+      group-hover:scale-[1.03]
+    "
                     />
                   </div>
+
 
                   <div className="p-8 flex justify-between items-start gap-6">
                     <div>
@@ -157,12 +165,12 @@ export default function Events() {
                            bg-[#0d0d0d] opacity-80 grayscale"
               >
                 <div className="w-full bg-black flex items-center justify-center">
-  <img
-    src={event.coverImage || "/placeholder.jpg"}
-    alt={event.title}
-    className="w-full h-auto max-h-56 object-contain transition-transform duration-700 group-hover:scale-105"
-  />
-</div>
+                  <img
+                    src={event.coverImage || "/placeholder.jpg"}
+                    alt={event.title}
+                    className="w-full h-auto max-h-56 object-contain transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
 
 
                 <div className="lg:col-span-8 p-10">
