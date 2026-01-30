@@ -156,13 +156,14 @@ export default function Events() {
                            rounded-[2.5rem] overflow-hidden
                            bg-[#0d0d0d] opacity-80 grayscale"
               >
-                <div className="lg:col-span-4">
-                  <img
-                    src={event.coverImage || "/placeholder.jpg"}
-                    alt={event.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                <div className="w-full bg-black flex items-center justify-center">
+  <img
+    src={event.coverImage || "/placeholder.jpg"}
+    alt={event.title}
+    className="w-full h-auto max-h-56 object-contain transition-transform duration-700 group-hover:scale-105"
+  />
+</div>
+
 
                 <div className="lg:col-span-8 p-10">
                   <span className="inline-block mb-3 px-3 py-1 text-xs font-bold uppercase
