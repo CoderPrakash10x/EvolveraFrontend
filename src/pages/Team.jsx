@@ -26,7 +26,7 @@ const currentTeam = [
 ======================= */
 const pastMembers = [
   { role: "President", name: "Shivam Rai", img: "/Teams/Shivam Rai.jpeg" },
-  { role: "Vice President", name: "Najiya", img: "/Teams/Najiya.jpeg" },// yaha inka image lagana hai aur public ke teams folder me photo rahega
+  { role: "Vice President", name: "Najiya", img: "/Teams/najiya.jpeg" },// yaha inka image lagana hai aur public ke teams folder me photo rahega
   { role: "Secretary", name: "Mohammad Mughees", img: "/Teams/Mohammad Mughees.jpeg" },
   { role: "Deputy Secretary", name: "Badal Singh", img: "/Teams/Badal Singh.jpeg" },
   { role: "Technical Head", name: "Shubham Singh", img: "/Teams/Shubham Singh.jpeg" },
@@ -51,8 +51,6 @@ const Card = ({ img, role, name, dept }) => (
 
     <p className="text-[11px] uppercase tracking-widest text-gray-400">{role}</p>
     <h3 className="text-xl font-black text-orange-500 mt-1">{name}</h3>
-
-    {dept && <p className="text-xs text-gray-400 mt-1">{dept}</p>}
   </div>
 );
 
@@ -86,7 +84,7 @@ const EvolveraTeam = () => {
         <div className="max-w-7xl mx-auto text-center">
 
           <h2 className="text-4xl font-black mb-16">
-            Past <span className="text-orange-500">Members</span>
+            Founder & <span className="text-orange-500"> Initiator</span>
           </h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12">
