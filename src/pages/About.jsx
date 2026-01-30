@@ -217,7 +217,14 @@ const EvolveraLanding = () => {
 
 
       <div className="group relative bg-[#0d0d0d] rounded-3xl p-6 border border-white/5 hover:border-orange-500/40 transition-all">
-        <div className="h-44 rounded-2xl bg-gradient-to-br from-orange-500/30 to-orange-600/10 mb-6" />
+       <div className="h-44 rounded-2xl overflow-hidden mb-6 border border-orange-500/20">
+  <img
+    src="/card1.jpg"
+    alt="AI Innovation"
+    className="w-full h-full object-cover opacity-90"
+  />
+</div>
+
         <h3 className="text-lg font-semibold text-white mb-2">
           AI & Innovation
         </h3>
@@ -244,7 +251,13 @@ const EvolveraLanding = () => {
       </div>
 
       <div className="group relative bg-[#0d0d0d] rounded-3xl p-6 border border-white/5 hover:border-orange-500/40 transition-all">
-        <div className="h-44 rounded-2xl bg-gradient-to-br from-orange-500/30 to-orange-600/10 mb-6" />
+        <div className="h-44 rounded-2xl overflow-hidden mb-6 border border-orange-500/20">
+  <img
+    src="/card2.jpg"
+    alt="AI Innovation"
+    className="w-full h-full object-cover opacity-90"
+  />
+</div>
         <h3 className="text-lg font-semibold text-white mb-2">
           Leadership & Growth
         </h3>

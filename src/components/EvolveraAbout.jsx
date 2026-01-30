@@ -28,7 +28,7 @@ const Faq = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section className="bg-black text-white py-32 px-6">
+    <section className="bg-black text-white py-22 mb-14 px-6">
       <div className="max-w-5xl mx-auto">
 
        

@@ -1,5 +1,5 @@
 import React from "react";
-import { Twitter, Facebook, Instagram } from "lucide-react";
+import {  Instagram, Linkedin } from "lucide-react";
 
 const AboutUs = () => {
   return (
@@ -51,9 +51,10 @@ const AboutUs = () => {
 
           {/* Socials */}
           <div className="absolute -bottom-10 flex gap-6 text-gray-400">
-            <Twitter size={18} className="hover:text-orange-500 transition" />
-            <Facebook size={18} className="hover:text-orange-500 transition" />
-            <Instagram size={18} className="hover:text-orange-500 transition" />
+            <a href="https://www.instagram.com/evolveraclub._?utm_source=qr&igsh=MWhibmM0MzVicnhxbw=="
+              target="_blank"><Instagram size={18} className="hover:text-orange-500 transition" /></a>
+            <a href="https://www.linkedin.com/company/evolvera-club/"
+              target="_blank"><Linkedin size={18} className="hover:text-orange-500 transition" /></a>
           </div>
         </div>
 
