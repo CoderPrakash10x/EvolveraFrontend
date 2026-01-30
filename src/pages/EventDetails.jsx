@@ -18,7 +18,7 @@ export default function EventDetails() {
 
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     getEventById(id)
@@ -74,9 +74,8 @@ export default function EventDetails() {
                 {event.title}
               </h1>
 
-              <p className="text-gray-400 mb-8">
-                {event.description}
-              </p>
+              <StructuredDescription content={event.description} />
+
 
               <div className="space-y-4 mb-10">
                 <div className="flex items-center gap-4">
@@ -111,21 +110,23 @@ export default function EventDetails() {
                 </h4>
 
                 <button
-                  onClick={() =>
-                    event.isRegistrationOpen && setShowForm(true)
-                  }
+                  onClick={() => {
+                    if (event.isRegistrationOpen) {
+                      window.open("https://docs.google.com/forms/d/e/1FAIpQLSddcltVLMC3n9alNgOCA3PrT-jJESojsgm7yO14g_ayst1UkA/viewform", "_blank");
+                    }
+                  }}
                   disabled={!event.isRegistrationOpen}
                   className={`w-full py-4 rounded-2xl font-black uppercase transition
-                    ${
-                      event.isRegistrationOpen
-                        ? "bg-orange-500 text-black hover:bg-white"
-                        : "bg-zinc-700 text-gray-400 cursor-not-allowed"
+    ${event.isRegistrationOpen
+                      ? "bg-orange-500 text-black hover:bg-white"
+                      : "bg-zinc-700 text-gray-400 cursor-not-allowed"
                     }`}
                 >
                   {event.isRegistrationOpen
-                    ? "Register Now"
+                    ? "Register via Google Form"
                     : "Registration Closed"}
                 </button>
+
 
                 <div className="mt-8 pt-8 border-t border-white/10 flex gap-4">
                   <Trophy className="text-orange-500" size={32} />
@@ -146,7 +147,7 @@ export default function EventDetails() {
       </motion.div>
 
       {/* ================= REGISTRATION MODAL ================= */}
-      {showForm && (
+      {/* {showForm && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-4 text-white">
           <div className="bg-[#0d0d0d] p-8 rounded-3xl w-full max-w-md relative max-h-[90vh] overflow-y-auto">
             <button
@@ -169,7 +170,7 @@ export default function EventDetails() {
             />
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }
@@ -191,3 +192,63 @@ const DetailBlock = ({ title, items }) => (
     </ul>
   </div>
 );
+const StructuredDescription = ({ content }) => {
+  if (!content) return null;
+
+  // 🔥 FORCE headings to start on new line
+  const fixed = content
+    .replace(/\s*##\s*/g, "\n## ")
+    .replace(/\r/g, "")
+    .trim();
+
+  const parts = fixed.split("\n## ");
+
+  const summary = parts[0]?.trim();
+  const sections = parts.slice(1);
+
+  return (
+    <div className="space-y-14 mt-10 max-w-3xl">
+      {/* SUMMARY */}
+      {summary && (
+        <p className="text-gray-300 text-lg leading-relaxed">
+          {summary}
+        </p>
+      )}
+
+      {/* SECTIONS */}
+      {sections.map((block, i) => {
+        const lines = block
+          .split("\n")
+          .map(l => l.trim())
+          .filter(Boolean);
+
+        if (!lines.length) return null;
+
+        const title = lines[0];
+        const body = lines.slice(1);
+
+        return (
+          <div key={i} className="space-y-4">
+            <h3 className="text-2xl font-black text-orange-500">
+              {title}
+            </h3>
+
+            <ul className="space-y-2">
+              {body.map((line, idx) => (
+                <li
+                  key={idx}
+                  className="flex gap-3 text-gray-300 leading-relaxed"
+                >
+                  <span className="text-orange-500 mt-1">•</span>
+                  <span>
+                    {line.replace(/^[-•–\d.\s👉🔥🎯🏆📊🧠🗣🚫💡]+/, "")}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
