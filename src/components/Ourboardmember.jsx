@@ -6,7 +6,7 @@ const boardMembers = [
     name: "Mr. Anurag Singh",
     role: "Assistant Professor",
     image: "/anuragsir.png",
-    bio: "With over 8 years of teaching experience, Mr. Singh specializes in Natural Language Processing (NLP). He holds an M.Tech and is pursuing a Ph.D., guiding students toward advanced research and innovation in AI.",
+    bio: "With over 8 years of teaching experience, Mr.Anurag Singh specializes in Natural Language Processing (NLP). He holds an M.Tech and is pursuing a Ph.D., guiding students toward advanced research and innovation in AI.",
     email: "anuragcse@kipm.edu.in",
     phone: "+91-9648368001",
   },
