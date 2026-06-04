@@ -5,26 +5,26 @@ import { Link } from "react-router-dom";
 const SPONSORS = [
   {
     id: 1,
-    name: "Maa Jai Janaki Sewa Trust",
+    name: "Shri Ram Janaki Sewa Trust",
     tier: "gold",
     logo: null,
-    initials: "MJJ",
+    initials: "SRJST",
     description: "Community Welfare",
   },
   {
     id: 2,
-    name: "Maa Ram Jatki Sewa Niranjana",
+    name: "Shri Ram Janki netralay",
     tier: "gold",
     logo: null,
     initials: "MRJ",
-    description: "Social Service",
+    description: "Hospitality Partner",
   },
   {
     id: 3,
-    name: "DPD Gorakhpur",
+    name: "BBD Gorakhpur",
     tier: "title",
     logo: null,
-    initials: "DPD",
+    initials: "BBD",
     description: "Technology Partner",
   },
   {
@@ -41,7 +41,7 @@ const SPONSORS = [
     tier: "silver",
     logo: null,
     initials: "OS",
-    description: "Hospitality Partner",
+    description: "Social Welfare",
   },
 ];
 
