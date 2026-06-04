@@ -5,12 +5,6 @@ export const EVENT_BADGE = {
     text: "Upcoming",
     class: "bg-orange-500 text-black"
   },
-
-  coming_soon: {
-    text: "Coming Soon",
-    class: "bg-orange-500/10 text-orange-400 border border-orange-500/30"
-  },
-
   open: {
     text: "Register Open",
     class: "bg-green-500/10 text-green-400 border border-green-500/30"
@@ -25,6 +19,18 @@ export const EVENT_BADGE = {
   past: {
     text: "Past",
     class: "bg-zinc-700/50 text-gray-300"
+  },
+
+  /* ================= REGISTRATION STATUS ================= */
+
+  comingSoon: {
+    text: "Coming Soon",
+    class: "bg-yellow-500/10 text-yellow-400 border border-yellow-500/30"
+  },
+
+  registrationClosed: {
+    text: "Registration Closed",
+    class: "bg-red-500/10 text-red-400 border border-red-500/30"
   },
 
   /* ================= REGISTRATION MODE ================= */

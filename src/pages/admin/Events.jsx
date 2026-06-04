@@ -29,7 +29,6 @@ const Events = () => {
   const handleDelete = async (id) => {
     const ok = confirm("Are you sure you want to delete this event?");
     if (!ok) return;
-
     try {
       await deleteAdminEvent(id);
       toast.success("Event deleted");
@@ -50,7 +49,6 @@ const Events = () => {
         <h1 className="text-4xl font-black">
           Events <span className="text-orange-500">Management</span>
         </h1>
-
         <button
           onClick={() => navigate("/admin/events/create")}
           className="px-6 py-3 bg-orange-500 text-black font-black rounded-xl hover:scale-105 transition"
@@ -78,7 +76,6 @@ const Events = () => {
                 key={e._id}
                 className="border-t border-white/5 hover:bg-zinc-900/40 transition"
               >
-        
                 <td className="p-4">
                   {e.coverImage ? (
                     <img
@@ -94,12 +91,11 @@ const Events = () => {
                 <td className="p-4 font-semibold">{e.title}</td>
 
                 <td className="p-4 text-gray-400">
-                  {e.eventDate
-                    ? new Date(e.eventDate).toLocaleDateString()
+                  {e.eventStartAt
+                    ? new Date(e.eventStartAt).toLocaleDateString()
                     : "—"}
                 </td>
 
-      
                 <td className="p-4">
                   {e.isRegistrationOpen ? (
                     <span className="px-3 py-1 text-xs bg-green-500/20 text-green-400 rounded-full">
@@ -112,33 +108,40 @@ const Events = () => {
                   )}
                 </td>
 
-                
-                <td className="p-4 flex gap-3 justify-center">
-                  <button
-                    onClick={() =>
-                      navigate(`/admin/events/create?id=${e._id}`)
-                    }
-                    className="px-4 py-2 text-xs rounded-lg bg-white/10 hover:bg-white/20"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => handleDelete(e._id)}
-                    className="px-4 py-2 text-xs rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30"
-                  >
-                    Delete
-                  </button>
+                <td className="p-4">
+                  <div className="flex gap-2 justify-center flex-wrap">
+                    <button
+                      onClick={() => navigate(`/admin/events/create?id=${e._id}`)}
+                      className="px-3 py-2 text-xs rounded-lg bg-white/10 hover:bg-white/20"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => navigate(`/admin/events/${e._id}/form-builder`)}
+                      className="px-3 py-2 text-xs rounded-lg bg-orange-500/20 text-orange-400 hover:bg-orange-500/30"
+                    >
+                      Form
+                    </button>
+                    <button
+                      onClick={() => navigate(`/admin/events/${e._id}/submissions`)}
+                      className="px-3 py-2 text-xs rounded-lg bg-blue-500/20 text-blue-400 hover:bg-blue-500/30"
+                    >
+                      Submissions
+                    </button>
+                    <button
+                      onClick={() => handleDelete(e._id)}
+                      className="px-3 py-2 text-xs rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
 
             {events.length === 0 && (
               <tr>
-                <td
-                  colSpan="5"
-                  className="p-10 text-center text-gray-500"
-                >
+                <td colSpan="5" className="p-10 text-center text-gray-500">
                   No events found
                 </td>
               </tr>

@@ -98,7 +98,7 @@ const Registrations = () => {
                     {r.teamName || "Individual"}
                   </td>
                   <td className="p-4 text-center">
-                    {r.members.length}
+                    {r.members?.length ?? 0}
                   </td>
                   <td className="p-4 text-gray-400">
                     {new Date(r.createdAt).toLocaleDateString()}

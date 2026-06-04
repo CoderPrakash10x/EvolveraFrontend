@@ -11,6 +11,7 @@ import {
 import { getEventById } from "../services/event.service";
 import EventRegistrationForm from "../components/EventRegistrationForm";
 import { EVENT_BADGE } from "../utils/eventBadge";
+import DynamicRegistrationForm from "../components/DynamicRegistrationForm";
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -18,7 +19,7 @@ export default function EventDetails() {
 
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     getEventById(id)
@@ -41,6 +42,13 @@ export default function EventDetails() {
       </div>
     );
   }
+
+  const badge =
+    event.status === "live"
+      ? EVENT_BADGE.live
+      : event.status === "past"
+        ? EVENT_BADGE.past
+        : EVENT_BADGE[event.registrationStatus] ?? EVENT_BADGE.upcoming;
 
   return (
     <>
@@ -65,9 +73,9 @@ export default function EventDetails() {
             <div>
               {/* STATUS BADGE */}
               <span
-                className={`uppercase text-sm font-black ${EVENT_BADGE[event.status].class}`}
+                className={`uppercase text-sm font-black ${badge.class}`}
               >
-                {EVENT_BADGE[event.status].text}
+                {badge.text}
               </span>
 
               <h1 className="text-5xl md:text-7xl font-black uppercase my-6">
@@ -76,11 +84,10 @@ export default function EventDetails() {
 
               <StructuredDescription content={event.description} />
 
-
               <div className="space-y-4 mb-10">
                 <div className="flex items-center gap-4">
                   <Calendar className="text-orange-500" />
-                  {new Date(event.eventDate).toDateString()}
+                  {new Date(event.eventStartAt).toDateString()}
                 </div>
                 <div className="flex items-center gap-4">
                   <MapPin className="text-orange-500" />
@@ -88,7 +95,6 @@ export default function EventDetails() {
                 </div>
               </div>
 
-              {/* 🔥 EXTRA DETAILS */}
               {event.skills?.length > 0 && (
                 <DetailBlock title="Skills Required" items={event.skills} />
               )}
@@ -103,41 +109,33 @@ export default function EventDetails() {
             </div>
 
             {/* RIGHT */}
-            <div className="sticky top-32">
-              <div className="bg-zinc-900 border border-orange-500/20 p-8 rounded-3xl">
-                <h4 className="text-2xl font-bold mb-4">
-                  Ready to Join?
-                </h4>
+            <div className="bg-zinc-900 border border-orange-500/20 p-8 rounded-3xl">
+              <h4 className="text-2xl font-bold mb-4">Ready to Join?</h4>
 
+              {!showForm ? (
                 <button
-                  onClick={() => {
-                    if (event.isRegistrationOpen) {
-                      window.open("https://docs.google.com/forms/d/e/1FAIpQLSddcltVLMC3n9alNgOCA3PrT-jJESojsgm7yO14g_ayst1UkA/viewform", "_blank");
-                    }
-                  }}
+                  onClick={() => { if (event.isRegistrationOpen) setShowForm(true); }}
                   disabled={!event.isRegistrationOpen}
                   className={`w-full py-4 rounded-2xl font-black uppercase transition
-    ${event.isRegistrationOpen
+        ${event.isRegistrationOpen
                       ? "bg-orange-500 text-black hover:bg-white"
                       : "bg-zinc-700 text-gray-400 cursor-not-allowed"
                     }`}
                 >
-                  {event.isRegistrationOpen
-                    ? "Register via Google Form"
-                    : "Registration Closed"}
+                  {event.isRegistrationOpen ? "Register Now" : "Registration Closed"}
                 </button>
+              ) : (
+                <DynamicRegistrationForm
+                  eventId={event._id}
+                  onClose={() => setShowForm(false)}
+                />
+              )}
 
-
-                <div className="mt-8 pt-8 border-t border-white/10 flex gap-4">
-                  <Trophy className="text-orange-500" size={32} />
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase">
-                      Organized by
-                    </p>
-                    <p className="font-bold">
-                      Evolvera Club
-                    </p>
-                  </div>
+              <div className="mt-8 pt-8 border-t border-white/10 flex gap-4">
+                <Trophy className="text-orange-500" size={32} />
+                <div>
+                  <p className="text-xs text-gray-500 uppercase">Organized by</p>
+                  <p className="font-bold">Evolvera Club</p>
                 </div>
               </div>
             </div>
@@ -145,37 +143,11 @@ export default function EventDetails() {
           </div>
         </div>
       </motion.div>
-
-      {/* ================= REGISTRATION MODAL ================= */}
-      {/* {showForm && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-4 text-white">
-          <div className="bg-[#0d0d0d] p-8 rounded-3xl w-full max-w-md relative max-h-[90vh] overflow-y-auto">
-            <button
-              onClick={() => setShowForm(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"
-            >
-              ✕
-            </button>
-
-            <h3 className="text-2xl font-black mb-6">
-              Register for{" "}
-              <span className="text-orange-500">
-                {event.title}
-              </span>
-            </h3>
-
-            <EventRegistrationForm
-              event={event}
-              onClose={() => setShowForm(false)}
-            />
-          </div>
-        </div>
-      )} */}
     </>
   );
 }
 
-/* ================= SMALL COMPONENT ================= */
+/* ================= SMALL COMPONENTS ================= */
 
 const DetailBlock = ({ title, items }) => (
   <div className="mb-10">
@@ -192,10 +164,10 @@ const DetailBlock = ({ title, items }) => (
     </ul>
   </div>
 );
+
 const StructuredDescription = ({ content }) => {
   if (!content) return null;
 
-  // 🔥 FORCE headings to start on new line
   const fixed = content
     .replace(/\s*##\s*/g, "\n## ")
     .replace(/\r/g, "")
@@ -208,14 +180,12 @@ const StructuredDescription = ({ content }) => {
 
   return (
     <div className="space-y-14 mt-10 max-w-3xl">
-      {/* SUMMARY */}
       {summary && (
         <p className="text-gray-300 text-lg leading-relaxed">
           {summary}
         </p>
       )}
 
-      {/* SECTIONS */}
       {sections.map((block, i) => {
         const lines = block
           .split("\n")
@@ -232,13 +202,9 @@ const StructuredDescription = ({ content }) => {
             <h3 className="text-2xl font-black text-orange-500">
               {title}
             </h3>
-
             <ul className="space-y-2">
               {body.map((line, idx) => (
-                <li
-                  key={idx}
-                  className="flex gap-3 text-gray-300 leading-relaxed"
-                >
+                <li key={idx} className="flex gap-3 text-gray-300 leading-relaxed">
                   <span className="text-orange-500 mt-1">•</span>
                   <span>
                     {line.replace(/^[-•–\d.\s👉🔥🎯🏆📊🧠🗣🚫💡]+/, "")}

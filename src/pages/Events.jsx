@@ -58,90 +58,95 @@ export default function Events() {
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {upcomingEvents.map((event) => (
-              <Link
-                to={`/events/${event._id}`}
-                key={event._id}
-                className="block group"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className={`bg-zinc-900/40 border border-white/5 rounded-3xl
-                              overflow-hidden transition-all
-                              ${event.status === "live"
-                      ? "border-red-500/50 shadow-[0_0_40px_rgba(239,68,68,0.35)]"
-                      : "hover:border-orange-500/50"
-                    }`}
+            {upcomingEvents.map((event) => {
+
+              const badge =
+                event.status === "live"
+                  ? EVENT_BADGE.live
+                  : EVENT_BADGE[event.registrationStatus] ?? EVENT_BADGE.upcoming;
+
+              return (
+                <Link
+                  to={`/events/${event._id}`}
+                  key={event._id}
+                  className="block group"
                 >
-                  <div className="w-full bg-black rounded-t-3xl overflow-hidden">
-                    <img
-                      src={event.coverImage || "/placeholder.jpg"}
-                      alt={event.title}
-                      className="
-      w-full 
-      aspect-[16/9]
-      object-contain
-      bg-black
-      transition-transform 
-      duration-500 
-      group-hover:scale-[1.03]
-    "
-                    />
-                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className={`bg-zinc-900/40 border border-white/5 rounded-3xl
+                                overflow-hidden transition-all
+                                ${event.status === "live"
+                        ? "border-red-500/50 shadow-[0_0_40px_rgba(239,68,68,0.35)]"
+                        : "hover:border-orange-500/50"
+                      }`}
+                  >
+                    <div className="w-full bg-black rounded-t-3xl overflow-hidden">
+                      <img
+                        src={event.coverImage || "/placeholder.jpg"}
+                        alt={event.title}
+                        className="
+                          w-full 
+                          aspect-[16/9]
+                          object-contain
+                          bg-black
+                          transition-transform 
+                          duration-500 
+                          group-hover:scale-[1.03]
+                        "
+                      />
+                    </div>
 
+                    <div className="p-8 flex justify-between items-start gap-6">
+                      <div>
+                        {/* STATUS BADGE */}
+                        <span
+                          className={`text-[10px] px-3 py-1 rounded-full font-bold uppercase mb-3 
+                                      inline-flex items-center gap-2
+                                      ${badge.class}`}
+                        >
+                          {event.status === "live" && (
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                            </span>
+                          )}
+                          {badge.text}
+                        </span>
 
-                  <div className="p-8 flex justify-between items-start gap-6">
-                    <div>
-                      {/* STATUS BADGE */}
-                      <span
-                        className={`text-[10px] px-3 py-1 rounded-full font-bold uppercase mb-3 
-                                    inline-flex items-center gap-2
-                                    ${EVENT_BADGE[event.status].class}`}
-                      >
+                        <h4 className="text-2xl font-bold uppercase group-hover:text-orange-500 transition-colors">
+                          {event.title}
+                        </h4>
 
-                        {event.status === "live" && (
-                          <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                        <div className="flex flex-wrap gap-4 mt-3 text-gray-400 text-sm">
+                          <span className="flex items-center gap-1">
+                            <Calendar size={14} />
+                            {formatDate(event.eventStartAt)}
                           </span>
-                        )}
 
-                        {EVENT_BADGE[event.status].text}
-                      </span>
+                          <span className="flex items-center gap-1">
+                            <Clock size={14} />
+                            {formatTime(event.eventStartAt)}
+                          </span>
 
-                      <h4 className="text-2xl font-bold uppercase group-hover:text-orange-500 transition-colors">
-                        {event.title}
-                      </h4>
+                          <span className="flex items-center gap-1">
+                            <MapPin size={14} />
+                            {event.location || "TBA"}
+                          </span>
+                        </div>
+                      </div>
 
-                      <div className="flex flex-wrap gap-4 mt-3 text-gray-400 text-sm">
-                        <span className="flex items-center gap-1">
-                          <Calendar size={14} />
-                          {formatDate(event.eventDate)}
-                        </span>
-
-                        <span className="flex items-center gap-1">
-                          <Clock size={14} />
-                          {formatTime(event.eventDate)}
-                        </span>
-
-                        <span className="flex items-center gap-1">
-                          <MapPin size={14} />
-                          {event.location || "TBA"}
-                        </span>
+                      <div className="bg-orange-500 p-4 rounded-2xl text-black shrink-0">
+                        <ArrowUpRight size={24} strokeWidth={3} />
                       </div>
                     </div>
-
-                    <div className="bg-orange-500 p-4 rounded-2xl text-black shrink-0">
-                      <ArrowUpRight size={24} strokeWidth={3} />
-                    </div>
-                  </div>
-                </motion.div>
-              </Link>
-            ))}
+                  </motion.div>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
-        {/* ================= PAST EVENTS hoga jab upcomming event khatam ho jayega wah past me chala jayega woooo ================= */}
+        {/* ================= PAST EVENTS ================= */}
         <div>
           <div className="flex items-center gap-4 mb-10">
             <span className="w-12 h-[2px] bg-gray-500"></span>
@@ -172,7 +177,6 @@ export default function Events() {
                   />
                 </div>
 
-
                 <div className="lg:col-span-8 p-10">
                   <span className="inline-block mb-3 px-3 py-1 text-xs font-bold uppercase
                                    bg-zinc-700/50 text-gray-300 rounded-full">
@@ -186,7 +190,7 @@ export default function Events() {
                   <div className="flex gap-6 text-gray-400 mt-4 text-sm">
                     <span>
                       <Calendar size={14} />{" "}
-                      {formatDate(event.eventDate)}
+                      {formatDate(event.eventStartAt)}
                     </span>
                     <span>
                       <MapPin size={14} />{" "}

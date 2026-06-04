@@ -19,18 +19,13 @@ const CreateEvent = () => {
     title: "",
     description: "",
     location: "",
-    eventDate: "",
-
-    // 🔥 REGISTRATION WINDOW
-    registrationStartDate: "",
-    registrationEndDate: "",
-
-    // 🔥 REGISTRATION LOGIC
+    eventStartAt: "",
+    eventEndAt: "",
+    registrationStartAt: "",
+    registrationEndAt: "",
     registrationMode: "individual",
     minTeamSize: 1,
     maxTeamSize: 5,
-
-    // 🔥 EXTRA
     skills: "",
     perks: "",
     rules: ""
@@ -48,15 +43,13 @@ const CreateEvent = () => {
         title: e.title || "",
         description: e.description || "",
         location: e.location || "",
-        eventDate: e.eventDate?.slice(0, 10) || "",
-
-        registrationStartDate: e.registrationStartDate?.slice(0, 10) || "",
-        registrationEndDate: e.registrationEndDate?.slice(0, 10) || "",
-
+        eventStartAt: e.eventStartAt?.slice(0, 16) || "",
+        eventEndAt: e.eventEndAt?.slice(0, 16) || "",
+        registrationStartAt: e.registrationStartAt?.slice(0, 16) || "",
+        registrationEndAt: e.registrationEndAt?.slice(0, 16) || "",
         registrationMode: e.registrationMode || "individual",
         minTeamSize: e.minTeamSize || 1,
         maxTeamSize: e.maxTeamSize || 5,
-
         skills: (e.skills || []).join("\n"),
         perks: (e.perks || []).join("\n"),
         rules: (e.rules || []).join("\n")
@@ -74,31 +67,29 @@ const CreateEvent = () => {
     e.preventDefault();
     setLoading(true);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    const eventStart = new Date(form.eventStartAt);
 
-    const eventDate = new Date(form.eventDate);
-
-    if (eventDate < today) {
-      toast.error("Event date cannot be in the past");
+    if (eventStart < now) {
+      toast.error("Event start time cannot be in the past");
       setLoading(false);
       return;
     }
 
     if (
-      form.registrationStartDate &&
-      new Date(form.registrationStartDate) > eventDate
+      form.registrationStartAt &&
+      new Date(form.registrationStartAt) > eventStart
     ) {
-      toast.error("Registration start date cannot be after event date");
+      toast.error("Registration start cannot be after event start");
       setLoading(false);
       return;
     }
 
     if (
-      form.registrationEndDate &&
-      new Date(form.registrationEndDate) > eventDate
+      form.registrationEndAt &&
+      new Date(form.registrationEndAt) > eventStart
     ) {
-      toast.error("Registration end date cannot be after event date");
+      toast.error("Registration end cannot be after event start");
       setLoading(false);
       return;
     }
@@ -118,29 +109,16 @@ const CreateEvent = () => {
       fd.append("title", form.title);
       fd.append("description", form.description);
       fd.append("location", form.location);
-      fd.append("eventDate", form.eventDate);
-
-      // 🔥 REGISTRATION WINDOW
-      fd.append("registrationStartDate", form.registrationStartDate);
-      fd.append("registrationEndDate", form.registrationEndDate);
-
-      // 🔥 REGISTRATION LOGIC
+      fd.append("eventStartAt", form.eventStartAt);
+      fd.append("eventEndAt", form.eventEndAt);
+      fd.append("registrationStartAt", form.registrationStartAt);
+      fd.append("registrationEndAt", form.registrationEndAt);
       fd.append("registrationMode", form.registrationMode);
       fd.append("minTeamSize", form.minTeamSize);
       fd.append("maxTeamSize", form.maxTeamSize);
-
-      fd.append(
-        "skills",
-        JSON.stringify(form.skills.split("\n").filter(Boolean))
-      );
-      fd.append(
-        "perks",
-        JSON.stringify(form.perks.split("\n").filter(Boolean))
-      );
-      fd.append(
-        "rules",
-        JSON.stringify(form.rules.split("\n").filter(Boolean))
-      );
+      fd.append("skills", JSON.stringify(form.skills.split("\n").filter(Boolean)));
+      fd.append("perks", JSON.stringify(form.perks.split("\n").filter(Boolean)));
+      fd.append("rules", JSON.stringify(form.rules.split("\n").filter(Boolean)));
 
       if (coverImage) {
         fd.append("coverImage", coverImage);
@@ -179,25 +157,13 @@ const CreateEvent = () => {
         </Section>
 
         <Section title="Event Schedule">
-          <Field label="Event Date" type="date" name="eventDate" value={form.eventDate} onChange={handleChange} required />
+          <Field label="Event Start Date & Time" type="datetime-local" name="eventStartAt" value={form.eventStartAt} onChange={handleChange} required />
+          <Field label="Event End Date & Time" type="datetime-local" name="eventEndAt" value={form.eventEndAt} onChange={handleChange} />
         </Section>
 
-        {/* 🔥 THIS WAS MISSING */}
         <Section title="Registration Window">
-          <Field
-            label="Registration Start Date"
-            type="date"
-            name="registrationStartDate"
-            value={form.registrationStartDate}
-            onChange={handleChange}
-          />
-          <Field
-            label="Registration End Date"
-            type="date"
-            name="registrationEndDate"
-            value={form.registrationEndDate}
-            onChange={handleChange}
-          />
+          <Field label="Registration Start Date & Time" type="datetime-local" name="registrationStartAt" value={form.registrationStartAt} onChange={handleChange} />
+          <Field label="Registration End Date & Time" type="datetime-local" name="registrationEndAt" value={form.registrationEndAt} onChange={handleChange} />
         </Section>
 
         <Section title="Registration Settings">

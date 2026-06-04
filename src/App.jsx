@@ -31,6 +31,8 @@ import CreateGallery from "./pages/admin/CreateGallery";
 import AdminGalleryDetail from "./pages/admin/AdminGalleryDetail";
 import ContactMessages from "./pages/admin/ContactAdmin";
 import TeamPage from './pages/Team';
+import FormBuilder from "./pages/admin/FormBuilder";
+import FormSubmissions from "./pages/admin/FormSubmissions";
 /* ================= ROUTES ================= */
 function AnimatedRoutes() {
   const location = useLocation();
@@ -64,6 +66,8 @@ function AnimatedRoutes() {
 
   <Route path="events" element={<EventsAdmin />} />
   <Route path="events/create" element={<CreateEvent />} />
+  <Route path="events/:eventId/form-builder" element={<FormBuilder />} />
+<Route path="events/:eventId/submissions" element={<FormSubmissions />} />
 
   <Route path="registrations" element={<RegistrationsHome />} />
 <Route path="registrations/:eventId" element={<RegistrationsByEvent />} />
