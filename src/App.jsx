@@ -33,6 +33,7 @@ import ContactMessages from "./pages/admin/ContactAdmin";
 import TeamPage from './pages/Team';
 import FormBuilder from "./pages/admin/FormBuilder";
 import FormSubmissions from "./pages/admin/FormSubmissions";
+import SponsorsSection from "./pages/Sponsorshipsection";
 /* ================= ROUTES ================= */
 function AnimatedRoutes() {
   const location = useLocation();
@@ -50,6 +51,7 @@ function AnimatedRoutes() {
         <Route path="/gallery/:slug" element={<GalleryEvent />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/team" element={<TeamPage />} />
+        <Route path="/sponsor" element={<SponsorsSection />} />
 
         {/* ===== ADMIN LOGIN ===== */}
        <Route path="/admin/login" element={<Login />} />

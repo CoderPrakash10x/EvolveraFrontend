@@ -34,7 +34,7 @@ const Navbar = () => {
 
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-3">
-            {["/", "/about", "/events", "/gallery", "/team", "/contact"].map((path, i) => (
+            {["/", "/about", "/events", "/gallery", "/team", "/contact","/sponsor"].map((path, i) => (
               <NavLink
                 key={i}
                 to={path}
@@ -85,6 +85,7 @@ const Navbar = () => {
           <NavLink onClick={() => setOpen(false)} to="/gallery" className={linkClass}>Gallery</NavLink>
           <NavLink onClick={() => setOpen(false)} to="/team" className={linkClass}>Team</NavLink>
           <NavLink onClick={() => setOpen(false)} to="/contact" className={linkClass}>Contact</NavLink>
+          <NavLink onClick={() => setOpen(false)} to="/sponsor" className={linkClass}>Our Sponsors</NavLink>
         </div>
       </div>
     </nav>

@@ -76,6 +76,32 @@ export default function DynamicRegistrationForm({ eventId, onClose }) {
 
   if (loading) return <p className="text-gray-400 text-center py-8">Loading form...</p>;
 
+  const googleFormField = schema?.fields?.find(
+    (f) => f.type === "google_form"
+  );
+
+  if (googleFormField?.placeholder) {
+    window.open(googleFormField.placeholder, "_blank");
+
+    return (
+      <div className="text-center py-10">
+        <h3 className="text-2xl font-black text-orange-500">
+          Redirecting to Google Form...
+        </h3>
+
+        <a
+          href={googleFormField.placeholder}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-block mt-4 px-6 py-3 bg-orange-500 text-black font-bold rounded-xl"
+        >
+          Open Form
+        </a>
+      </div>
+    );
+  }
+
+
   if (!schema) return (
     <p className="text-gray-500 text-center py-8">Registration form not configured yet.</p>
   );
@@ -160,11 +186,10 @@ export default function DynamicRegistrationForm({ eventId, onClose }) {
                 <label key={opt} className="flex items-center gap-3 cursor-pointer group">
                   <div
                     onClick={() => handleChange(field.name, opt)}
-                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition cursor-pointer ${
-                      responses[field.name] === opt
+                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition cursor-pointer ${responses[field.name] === opt
                         ? "border-orange-500 bg-orange-500"
                         : "border-white/20 group-hover:border-orange-500/50"
-                    }`}
+                      }`}
                   >
                     {responses[field.name] === opt && (
                       <span className="w-2 h-2 rounded-full bg-white" />
@@ -187,11 +212,10 @@ export default function DynamicRegistrationForm({ eventId, onClose }) {
                       const checked = current.includes(opt);
                       handleCheckbox(field.name, opt, !checked);
                     }}
-                    className={`w-5 h-5 rounded border-2 flex items-center justify-center transition cursor-pointer ${
-                      (responses[field.name] || []).includes(opt)
+                    className={`w-5 h-5 rounded border-2 flex items-center justify-center transition cursor-pointer ${(responses[field.name] || []).includes(opt)
                         ? "border-orange-500 bg-orange-500"
                         : "border-white/20 group-hover:border-orange-500/50"
-                    }`}
+                      }`}
                   >
                     {(responses[field.name] || []).includes(opt) && (
                       <span className="text-white text-xs font-bold">✓</span>

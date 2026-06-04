@@ -6,7 +6,7 @@ export const EVENT_BADGE = {
     class: "bg-orange-500 text-black"
   },
   open: {
-    text: "Register Open",
+    text: "Registeration Open",
     class: "bg-green-500/10 text-green-400 border border-green-500/30"
   },
 
