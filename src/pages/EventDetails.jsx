@@ -109,39 +109,65 @@ export default function EventDetails() {
             </div>
 
             {/* RIGHT */}
-            <div className="bg-zinc-900 border border-orange-500/20 p-8 rounded-3xl">
-              <h4 className="text-2xl font-bold mb-4">Ready to Join?</h4>
+            {/* RIGHT */}
+            <div className="sticky top-32">
+              <div className="bg-zinc-900 border border-orange-500/20 p-8 rounded-3xl">
+                <h4 className="text-2xl font-bold mb-4">Ready to Join?</h4>
 
-              {!showForm ? (
-                <button
-                  onClick={() => { if (event.isRegistrationOpen) setShowForm(true); }}
-                  disabled={!event.isRegistrationOpen}
-                  className={`w-full py-4 rounded-2xl font-black uppercase transition
-        ${event.isRegistrationOpen
-                      ? "bg-orange-500 text-black hover:bg-white"
-                      : "bg-zinc-700 text-gray-400 cursor-not-allowed"
-                    }`}
-                >
-                  {event.isRegistrationOpen ? "Register Now" : "Registration Closed"}
-                </button>
-              ) : (
-                <DynamicRegistrationForm
-                  eventId={event._id}
-                  onClose={() => setShowForm(false)}
-                />
-              )}
+                {/* REGISTRATION BUTTON LOGIC */}
+                {event.isRegistrationOpen ? (
+                  <>
+                    {/* Google Form wala event */}
+                    {event.googleFormUrl ? (
+                      <a
+                        href={event.googleFormUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full py-4 rounded-2xl font-black uppercase transition
+                       bg-orange-500 text-black hover:bg-white
+                       flex items-center justify-center gap-2"
+                      >
+                        Register via Google Form ↗
+                      </a>
+                    ) : (
+                      /* Dynamic Form wala event */
+                      !showForm ? (
+                        <button
+                          onClick={() => setShowForm(true)}
+                          className="w-full py-4 rounded-2xl font-black uppercase transition
+                         bg-orange-500 text-black hover:bg-white"
+                        >
+                          Register Now
+                        </button>
+                      ) : (
+                        <DynamicRegistrationForm
+                          eventId={event._id}
+                          onClose={() => setShowForm(false)}
+                        />
+                      )
+                    )}
+                  </>
+                ) : (
+                  <button
+                    disabled
+                    className="w-full py-4 rounded-2xl font-black uppercase
+                   bg-zinc-700 text-gray-400 cursor-not-allowed"
+                  >
+                    {event.status === "past" ? "Event Ended" : "Registration Closed"}
+                  </button>
+                )}
 
-              <div className="mt-8 pt-8 border-t border-white/10 flex gap-4">
-                <Trophy className="text-orange-500" size={32} />
-                <div>
-                  <p className="text-xs text-gray-500 uppercase">Organized by</p>
-                  <p className="font-bold">Evolvera Club</p>
+                <div className="mt-8 pt-8 border-t border-white/10 flex gap-4">
+                  <Trophy className="text-orange-500" size={32} />
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase">Organized by</p>
+                    <p className="font-bold">Evolvera Club</p>
+                  </div>
                 </div>
               </div>
+</div>
             </div>
-
           </div>
-        </div>
       </motion.div>
     </>
   );

@@ -28,7 +28,8 @@ const CreateEvent = () => {
     maxTeamSize: 5,
     skills: "",
     perks: "",
-    rules: ""
+    rules: "",
+    googleFormUrl: ""
   });
 
   /* ================= LOAD EVENT (EDIT MODE) ================= */
@@ -52,7 +53,8 @@ const CreateEvent = () => {
         maxTeamSize: e.maxTeamSize || 5,
         skills: (e.skills || []).join("\n"),
         perks: (e.perks || []).join("\n"),
-        rules: (e.rules || []).join("\n")
+        rules: (e.rules || []).join("\n"),
+        googleFormUrl: e.googleFormUrl || ""
       });
     });
   }, [eventId]);
@@ -119,6 +121,7 @@ const CreateEvent = () => {
       fd.append("skills", JSON.stringify(form.skills.split("\n").filter(Boolean)));
       fd.append("perks", JSON.stringify(form.perks.split("\n").filter(Boolean)));
       fd.append("rules", JSON.stringify(form.rules.split("\n").filter(Boolean)));
+      fd.append("googleFormUrl", form.googleFormUrl);
 
       if (coverImage) {
         fd.append("coverImage", coverImage);
@@ -164,6 +167,20 @@ const CreateEvent = () => {
         <Section title="Registration Window">
           <Field label="Registration Start Date & Time" type="datetime-local" name="registrationStartAt" value={form.registrationStartAt} onChange={handleChange} />
           <Field label="Registration End Date & Time" type="datetime-local" name="registrationEndAt" value={form.registrationEndAt} onChange={handleChange} />
+        </Section>
+
+        <Section title="Registration Form">
+          <Field
+            label="Google Form URL (optional)"
+            type="url"
+            name="googleFormUrl"
+            value={form.googleFormUrl}
+            onChange={handleChange}
+            placeholder="https://docs.google.com/forms/..."
+          />
+          <p className="text-xs text-gray-600 mt-1">
+            Leave empty to use the built-in dynamic form builder instead.
+          </p>
         </Section>
 
         <Section title="Registration Settings">
