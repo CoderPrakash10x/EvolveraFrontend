@@ -102,6 +102,8 @@ const GalleryAdmin = () => {
                 <img
                   src={g.cover.url}
                   alt={g.title}
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 {/* IMAGE COUNT BADGE */}
@@ -114,7 +116,6 @@ const GalleryAdmin = () => {
               {/* CONTENT */}
               <div className="p-4">
                 <h3 className="font-bold text-lg mb-4 truncate">{g.title}</h3>
-
                 <div className="flex gap-2">
                   <button
                     onClick={() => navigate(`/admin/gallery/${g._id}`)}
