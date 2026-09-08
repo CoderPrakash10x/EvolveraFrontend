@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { AnimatePresence } from "framer-motion";
 
 /* ===== PUBLIC ===== */
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageLoader from "./components/utility/PageLoader";
 import Scrolltotop from "./components/Scrolltotop";
+import SmoothScroll from "./components/SmoothScroll";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -14,7 +14,6 @@ import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
 import GalleryHome from "./pages/GalleryHome";
 import GalleryEvent from "./pages/GalleryEvent";
-import Team from "./pages/Team";
 import Contact from "./pages/Contact";
 
 /* ===== ADMIN ===== */
@@ -30,18 +29,14 @@ import GalleryAdmin from "./pages/admin/Gallery";
 import CreateGallery from "./pages/admin/CreateGallery";
 import AdminGalleryDetail from "./pages/admin/AdminGalleryDetail";
 import ContactMessages from "./pages/admin/ContactAdmin";
-import TeamPage from './pages/Team';
+import TeamPage from "./pages/Team";
 import FormBuilder from "./pages/admin/FormBuilder";
 import FormSubmissions from "./pages/admin/FormSubmissions";
 import SponsorsSection from "./pages/Sponsorshipsection";
 /* ================= ROUTES ================= */
 function AnimatedRoutes() {
-  const location = useLocation();
-
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        
+    <Routes>
         {/* ===== PUBLIC ===== */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -83,20 +78,18 @@ function AnimatedRoutes() {
 
 
       </Routes>
-    </AnimatePresence>
   );
 }
 
-/* ================= LAYOUT ================= */
 function Layout() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
 
   return (
-    <div className="min-h-screen bg-black flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-ink flex flex-col overflow-x-hidden">
       {!isAdmin && <Navbar />}
 
-      <main className="flex-grow">
+      <main className="flex-grow" key={location.pathname}>
         <AnimatedRoutes />
       </main>
 
@@ -118,8 +111,10 @@ function App() {
 
   return (
     <Router>
-      <Scrolltotop />
-      <Layout />
+      <SmoothScroll>
+        <Scrolltotop />
+        <Layout />
+      </SmoothScroll>
     </Router>
   );
 }

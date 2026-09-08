@@ -118,9 +118,7 @@ export default function DynamicRegistrationForm({ eventId, onClose }) {
               placeholder={field.placeholder}
               value={responses[field.name] || ""}
               onChange={(e) => handleChange(field.name, e.target.value)}
-              className="w-full p-4 rounded-xl bg-zinc-900 border border-white/10
-                         focus:border-orange-500/50 focus:outline-none focus:ring-2
-                         focus:ring-orange-500/20 transition text-sm"
+              className="input text-sm"
             />
           )}
 
@@ -132,9 +130,7 @@ export default function DynamicRegistrationForm({ eventId, onClose }) {
               value={responses[field.name] || ""}
               onChange={(e) => handleChange(field.name, e.target.value)}
               rows={4}
-              className="w-full p-4 rounded-xl bg-zinc-900 border border-white/10
-                         focus:border-orange-500/50 focus:outline-none focus:ring-2
-                         focus:ring-orange-500/20 transition text-sm resize-none"
+              className="input resize-none text-sm"
             />
           )}
 
@@ -144,8 +140,7 @@ export default function DynamicRegistrationForm({ eventId, onClose }) {
               required={field.required}
               value={responses[field.name] || ""}
               onChange={(e) => handleChange(field.name, e.target.value)}
-              className="w-full p-4 rounded-xl bg-zinc-900 border border-white/10
-                         focus:border-orange-500/50 focus:outline-none transition text-sm"
+              className="input text-sm"
             >
               <option value="">Select an option</option>
               {field.options.map((opt) => (
@@ -209,8 +204,7 @@ export default function DynamicRegistrationForm({ eventId, onClose }) {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-4 bg-orange-500 text-black font-black uppercase
-                   rounded-2xl hover:bg-white transition disabled:opacity-50 mt-2"
+        className="mt-2 w-full bg-orange-500 py-4 text-sm font-semibold uppercase tracking-wide text-black transition hover:bg-white disabled:opacity-50"
       >
         {submitting ? "Submitting..." : "Submit Registration"}
       </button>

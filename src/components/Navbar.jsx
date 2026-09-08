@@ -1,95 +1,98 @@
-import { NavLink } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { NavLink, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NAV_LINKS } from "../data/nav";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "auto"
-  }, [open])
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
-  const linkClass = ({ isActive }) =>
-    `block w-full px-4 py-3 rounded-xl text-sm transition
-     ${isActive
-       ? "text-white bg-orange-500/20"
-       : "text-gray-300 hover:text-white hover:bg-white/10"}`
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const desktopClass = ({ isActive }) =>
+    `relative text-[13px] tracking-wide transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-orange-500 after:transition-all after:duration-300 ${
+      isActive ? "text-white after:w-full" : "text-neutral-400 hover:text-white after:w-0"
+    }`;
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <header
+      className={`fixed top-0 left-0 z-50 w-full transition-colors duration-300 ${
+        scrolled || open
+          ? "border-b border-white/10 bg-ink/90 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
+      }`}
+    >
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6" aria-label="Primary">
+        <NavLink to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+          <img src="/evolvera.png" alt="Evolvera Club" className="h-8 w-auto object-contain" />
+          <span className="hidden font-display text-sm tracking-tight text-white sm:block">Evolvera</span>
+        </NavLink>
 
-        {/* Navbar Bar */}
-        <div className="flex items-center justify-between rounded-full
-          bg-black/40 backdrop-blur-xl border border-white/20
-          px-5 sm:px-6 py-3 shadow-xl shadow-black/40">
+        <div className="hidden items-center gap-8 md:flex">
+          {NAV_LINKS.map((link) => (
+            <NavLink key={link.to} to={link.to} end={link.to === "/"} className={desktopClass}>
+              {link.label}
+            </NavLink>
+          ))}
+        </div>
 
-          {/* Logo */}
-          <NavLink to="/" onClick={() => setOpen(false)}>
-            <img
-              src="/evolvera.png"
-              alt="Evolvera Logo"
-              className="h-8 sm:h-9 object-contain"
-            />
-          </NavLink>
+        <button
+          type="button"
+          className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className="sr-only">Menu</span>
+          <span className="flex flex-col gap-1.5">
+            <span className={`block h-px w-6 bg-white transition ${open ? "translate-y-[4px] rotate-45" : ""}`} />
+            <span className={`block h-px w-6 bg-white transition ${open ? "-translate-y-[4px] -rotate-45" : ""}`} />
+          </span>
+        </button>
+      </nav>
 
-          {/* Desktop */}
-          <div className="hidden md:flex items-center gap-3">
-            {["/", "/about", "/events", "/gallery", "/team", "/contact","/sponsor"].map((path, i) => (
+      <div
+        className={`overflow-hidden border-t border-white/10 bg-black transition-[max-height] duration-300 md:hidden ${
+          open ? "max-h-screen" : "max-h-0"
+        }`}
+      >
+        <div className="flex min-h-[calc(100dvh-4rem)] flex-col justify-between px-6 py-10">
+          <div className="flex flex-col gap-5">
+            {NAV_LINKS.map((link) => (
               <NavLink
-                key={i}
-                to={path}
+                key={link.to}
+                to={link.to}
+                end={link.to === "/"}
+                onClick={() => setOpen(false)}
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded-full text-sm transition
-                  ${isActive
-                    ? "text-white bg-orange-500/20"
-                    : "text-gray-300 hover:text-white hover:bg-white/10"}`
+                  `font-display text-4xl tracking-tight ${isActive ? "text-orange-500" : "text-white"}`
                 }
               >
-                {path === "/" ? "Home" : path.replace("/", "").toUpperCase()}
+                {link.label}
               </NavLink>
             ))}
           </div>
-
-          {/* Mobile Button */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden text-white"
-          >
-            <div className="space-y-1.5">
-              <span className={`block w-6 h-0.5 bg-white transition ${open && "rotate-45 translate-y-2"}`} />
-              <span className={`block w-6 h-0.5 bg-white transition ${open && "opacity-0"}`} />
-              <span className={`block w-6 h-0.5 bg-white transition ${open && "-rotate-45 -translate-y-2"}`} />
-            </div>
-          </button>
+          <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">KIPM College · Gorakhpur</p>
         </div>
       </div>
+    </header>
+  );
+};
 
-      {/* Mobile Overlay */}
-      <div
-        className={`md:hidden fixed inset-0 bg-black/60 backdrop-blur-xl
-        transition-all duration-300
-        ${open ? "opacity-100 visible" : "opacity-0 invisible"}`}
-        onClick={() => setOpen(false)}
-      />
-
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden fixed top-[88px] left-0 w-full px-4
-        transition-all duration-300
-        ${open ? "translate-y-0 opacity-100" : "-translate-y-6 opacity-0 pointer-events-none"}`}
-      >
-        <div className="bg-black/80 border border-white/20 rounded-3xl p-4 space-y-2 shadow-2xl">
-          <NavLink onClick={() => setOpen(false)} to="/" className={linkClass}>Home</NavLink>
-          <NavLink onClick={() => setOpen(false)} to="/about" className={linkClass}>About</NavLink>
-          <NavLink onClick={() => setOpen(false)} to="/events" className={linkClass}>Events</NavLink>
-          <NavLink onClick={() => setOpen(false)} to="/gallery" className={linkClass}>Gallery</NavLink>
-          <NavLink onClick={() => setOpen(false)} to="/team" className={linkClass}>Team</NavLink>
-          <NavLink onClick={() => setOpen(false)} to="/contact" className={linkClass}>Contact</NavLink>
-          <NavLink onClick={() => setOpen(false)} to="/sponsor" className={linkClass}>Our Sponsors</NavLink>
-        </div>
-      </div>
-    </nav>
-  )
-}
-
-export default Navbar
+export default Navbar;

@@ -1,12 +1,12 @@
-import { motion } from "framer-motion";
 import { Mail, Phone } from "lucide-react";
+import Container from "./ui/Container";
 
 const boardMembers = [
   {
     name: "Mr. Anurag Singh",
     role: "Assistant Professor",
     image: "/anuragsir.png",
-    bio: "With over 8 years of teaching experience, Mr.Anurag Singh specializes in Natural Language Processing (NLP). He holds an M.Tech and is pursuing a Ph.D., guiding students toward advanced research and innovation in AI.",
+    bio: "With over 8 years of teaching experience, Mr. Anurag Singh specializes in Natural Language Processing (NLP). He holds an M.Tech and is pursuing a Ph.D., guiding students toward advanced research and innovation in AI.",
     email: "anuragcse@kipm.edu.in",
     phone: "+91-9648368001",
   },
@@ -22,77 +22,39 @@ const boardMembers = [
 
 export default function OurBoardMembers() {
   return (
-    <section className="bg-black py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="border-t border-white/10 py-24 md:py-32">
+      <Container>
+        <h2 className="font-display text-4xl text-white md:text-5xl">Board members</h2>
+        <p className="mt-4 max-w-xl text-sm text-neutral-400">
+          Faculty and mentors who guide Evolvera toward serious research, industry, and professional practice.
+        </p>
 
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-          <h2 className="text-4xl md:text-5xl text-white font-extrabold">
-           OUR BOARD <span className="text-orange-500">MEMBERS</span>
-          </h2>
-          <p className="mt-4 max-w-xl text-gray-400 text-sm">
-            Meet the visionaries behind Evolvera Club who guide students toward innovation and excellence.
-          </p>
-        </motion.div>
-
-        {/* Members */}
-        <div className="space-y-16">
+        <div className="mt-16 space-y-20">
           {boardMembers.map((m, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className={`flex flex-col md:flex-row ${
-                i % 2 !== 0 ? "md:flex-row-reverse" : ""
-              } items-center gap-10`}
+            <article
+              key={m.email}
+              className={`grid items-center gap-10 md:grid-cols-12 ${i % 2 !== 0 ? "md:[&>div:first-child]:order-2" : ""}`}
             >
-              {/* Image */}
-              <div className="relative w-60 h-72 rounded-2xl overflow-hidden border border-white/10">
-                <img
-                  src={m.image}
-                  alt={m.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent" />
+              <div className="md:col-span-4">
+                <img src={m.image} alt={m.name} className="aspect-[3/4] w-full object-cover" />
               </div>
-
-              {/* Content */}
-              <div className="flex-1 bg-[#0c0c0c] border border-white/10 rounded-2xl p-8">
-                <h3 className="text-2xl font-bold mb-1">
-                  {m.name}
-                </h3>
-
-                <p className="text-orange-400 text-sm font-medium mb-4">
-                  {m.role}
-                </p>
-
-                <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                  {m.bio}
-                </p>
-
-                <div className="flex flex-col gap-3 text-sm text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <Mail size={15} className="text-orange-500" />
-                    {m.email}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone size={15} className="text-orange-500" />
-                    {m.phone}
-                  </div>
+              <div className="md:col-span-8">
+                <h3 className="font-display text-3xl">{m.name}</h3>
+                <p className="mt-2 text-sm text-orange-500">{m.role}</p>
+                <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-neutral-400">{m.bio}</p>
+                <div className="mt-6 space-y-2 text-sm text-neutral-300">
+                  <a href={`mailto:${m.email}`} className="flex items-center gap-2 hover:text-orange-500">
+                    <Mail size={14} /> {m.email}
+                  </a>
+                  <a href={`tel:${m.phone}`} className="flex items-center gap-2 hover:text-orange-500">
+                    <Phone size={14} /> {m.phone}
+                  </a>
                 </div>
               </div>
-
-            </motion.div>
+            </article>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

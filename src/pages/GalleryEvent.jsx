@@ -1,21 +1,42 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import API from "../utils/api";
 import EvolveraGallery from "./EvolveraGallery";
 import { ArrowLeft } from "lucide-react";
+
+const PAGE_SIZE = 12;
 
 export default function GalleryEvent() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [gallery, setGallery] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
-    API.get(`/gallery/${slug}`)
+    setLoading(true);
+    API.get(`/gallery/${slug}?page=1&limit=${PAGE_SIZE}`)
       .then((res) => setGallery(res.data))
       .catch(() => setGallery(null))
       .finally(() => setLoading(false));
   }, [slug]);
+
+  const loadMore = useCallback(async () => {
+    if (!gallery || loadingMore || !gallery.hasMore) return;
+
+    setLoadingMore(true);
+    try {
+      const nextPage = gallery.page + 1;
+      const res = await API.get(`/gallery/${slug}?page=${nextPage}&limit=${PAGE_SIZE}`);
+      setGallery((prev) => ({
+        ...prev,
+        ...res.data,
+        images: [...(prev.images || []), ...(res.data.images || [])],
+      }));
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [gallery, loadingMore, slug]);
 
   if (loading) {
     return (
@@ -49,7 +70,10 @@ export default function GalleryEvent() {
   return (
     <EvolveraGallery
       title={gallery.title}
-      images={gallery.images.map((img) => img.url)}
+      images={(gallery.images || []).map((img) => img.url)}
+      totalImages={gallery.totalImages}
+      onLoadMore={loadMore}
+      loadingMore={loadingMore}
     />
   );
 }

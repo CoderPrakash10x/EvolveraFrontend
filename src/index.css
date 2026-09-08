@@ -2,208 +2,135 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --ink: #050505;
+  --white: #f5f5f5;
+  --muted: #a1a1aa;
+  --line: rgba(255, 255, 255, 0.1);
+  --orange: #f97316;
+  --blue: #38bdf8;
+  --violet: #a78bfa;
+  --amber: #fbbf24;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: var(--ink);
+  color: var(--white);
+}
+
 html,
 body {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   width: 100%;
   overflow-x: hidden;
-  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== Animated Badge Border ===== */
-@keyframes borderMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 200% 50%;
-  }
+::selection {
+  background: #f97316;
+  color: #050505;
 }
 
-.animated-border {
-  position: relative;
-  padding: 2px;
-  border-radius: 9999px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #f97316,
-    transparent
-  );
-  background-size: 200% 100%;
-  animation: borderMove 3s linear infinite;
+:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 3px;
 }
 
-/* ===== Orb Animations ===== */
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.font-display {
+  font-family: "Instrument Sans", Inter, sans-serif;
 }
 
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.label-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
 }
 
-/* ===== Button Sweep ===== */
-@keyframes sweep {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(200%);
-  }
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 0.3s ease;
 }
 
-.btn-sweep {
-  position: relative;
-  overflow: hidden;
+.link-underline:hover {
+  background-size: 100% 1px;
 }
-
-.btn-sweep::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.6),
-    transparent
-  );
-  transform: skewX(-20deg);
-}
-
-.btn-sweep:hover::before {
-  animation: sweep 0.8s ease-in-out;
-}
-
-
-@keyframes floatSlow {
-  0% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(40px, -40px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes floatSlow {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-25px);
-  }
-}
-
-@keyframes floatReverse {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(25px);
-  }
-}
-
-@keyframes pulseSlow {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-floatSlow {
-  animation: floatSlow 8s ease-in-out infinite;
-}
-
-.animate-floatReverse {
-  animation: floatReverse 10s ease-in-out infinite;
-}
-
-.animate-pulseSlow {
-  animation: pulseSlow 4s ease-in-out infinite;
-}
-
-.animate-spinSlow {
-  animation: spinSlow 20s linear infinite;
-}
-
-
-@keyframes floatSlow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-25px); }
-}
-
-@keyframes floatReverse {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(25px); }
-}
-
-@keyframes pulseSlow {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-.animate-floatSlow {
-  animation: floatSlow 9s ease-in-out infinite;
-}
-
-.animate-floatReverse {
-  animation: floatReverse 11s ease-in-out infinite;
-}
-
-.animate-pulseSlow {
-  animation: pulseSlow 4s ease-in-out infinite;
-}
-
 
 .input {
   width: 100%;
-  padding: 1rem;
-  border-radius: 1rem;
-  background: #181818;
-  border: 1px solid rgba(255,255,255,0.1);
-  color: white;
+  padding: 1rem 1rem;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: #f5f5f5;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
 }
 
 .input:focus {
   outline: none;
-  border-color: #f97316;
+  border-color: var(--orange);
 }
 
-.label {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: #f97316;
-  margin-bottom: 0.5rem;
-  display: block;
+.grid-fine {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+}
+
+.glow-orange {
+  background: radial-gradient(ellipse at 20% 80%, rgba(249, 115, 22, 0.16), transparent 55%);
+}
+
+.glow-blue {
+  background: radial-gradient(ellipse at 85% 40%, rgba(56, 189, 248, 0.12), transparent 50%);
+}
+
+.glow-violet {
+  background: radial-gradient(ellipse at 10% 20%, rgba(167, 139, 250, 0.1), transparent 52%);
+}
+
+.glow-amber {
+  background: radial-gradient(ellipse at 50% 0%, rgba(251, 191, 36, 0.1), transparent 55%);
+}
+
+@keyframes sponsorMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.sponsor-marquee {
+  animation: sponsorMarquee 32s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .sponsor-marquee {
+    animation: none;
+  }
 }

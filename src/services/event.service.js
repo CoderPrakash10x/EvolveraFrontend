@@ -1,7 +1,7 @@
 import API from "../utils/api";
 
 export const getEvents = async () => {
-  const res = await API.get("/events");
+  const res = await API.get("/events?summary=true");
   return res.data;
 };
 

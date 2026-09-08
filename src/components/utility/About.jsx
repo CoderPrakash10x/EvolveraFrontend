@@ -1,88 +1,79 @@
 import React from "react";
-import {  Instagram, Linkedin } from "lucide-react";
+import { Instagram, Linkedin } from "lucide-react";
 
 const AboutUs = () => {
   return (
-    <section
-      className="min-h-screen flex items-center justify-center
-      bg-gradient-to-br from-black via-[#111] to-[#040404]
-      px-6 md:px-14 overflow-hidden font-poppins"
-    >
-      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 relative">
+    <section className="bg-black py-28 px-6 md:px-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 
-        {/* LEFT */}
-        <div className="relative flex justify-center lg:justify-start">
+        {/* LEFT — text leads */}
+        <div className="lg:col-span-6">
+          <h2 className="display-lg text-white text-4xl md:text-5xl mb-8">
+            A club, not a resume line.
+          </h2>
 
-          {/* Rotating Icon */}
-          <div className="absolute -left-16 top-24 hidden md:block">
-            <svg
-              width="70"
-              height="70"
-              viewBox="0 0 100 100"
-              className="fill-orange-500/40 animate-spin-slow"
+          <p className="body-copy text-[var(--gray-300)] text-base md:text-lg mb-5">
+            Evolvera started because a handful of students across different
+            branches kept ending up in the same conversations about AI and
+            wanted a place to actually build things together, not just talk
+            about them.
+          </p>
+
+          <p className="body-copy text-[var(--gray-300)] text-base md:text-lg">
+            No fees, no application. Show up to a workshop, pick a hackathon
+            team, and you're in.
+          </p>
+
+          {/* fact strip — orange used only as the tiny label accent */}
+          <dl className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-[var(--line)]">
+            <div>
+              <dt className="label-sm text-[var(--orange)] mb-1">Since</dt>
+              <dd className="display-lg text-white text-2xl">2025</dd>
+            </div>
+            <div>
+              <dt className="label-sm text-[var(--orange)] mb-1">Branches</dt>
+              <dd className="display-lg text-white text-2xl">6</dd>
+            </div>
+            <div>
+              <dt className="label-sm text-[var(--orange)] mb-1">To join</dt>
+              <dd className="display-lg text-white text-2xl">Free</dd>
+            </div>
+          </dl>
+
+          <div className="flex gap-5 mt-10">
+            <a
+              href="https://www.instagram.com/evolveraclub._?utm_source=qr&igsh=MWhibmM0MzVicnhxbw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--gray-500)] hover:text-[var(--orange)] transition-colors"
+              aria-label="Evolvera on Instagram"
             >
-              {[...Array(12)].map((_, i) => (
-                <rect
-                  key={i}
-                  x="48"
-                  y="12"
-                  width="4"
-                  height="28"
-                  transform={`rotate(${i * 30} 50 50)`}
-                  className="rounded-full"
-                />
-              ))}
-            </svg>
-          </div>
-
-          {/* Image */}
-          <div
-            className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden
-            border border-white/10
-            shadow-[0_30px_80px_rgba(255,140,0,0.15)]"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000"
-              alt="About Evolvera"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          </div>
-
-          {/* Socials */}
-          <div className="absolute -bottom-10 flex gap-6 text-gray-400">
-            <a href="https://www.instagram.com/evolveraclub._?utm_source=qr&igsh=MWhibmM0MzVicnhxbw=="
-              target="_blank"><Instagram size={18} className="hover:text-orange-500 transition" /></a>
-            <a href="https://www.linkedin.com/company/evolvera-club/"
-              target="_blank"><Linkedin size={18} className="hover:text-orange-500 transition" /></a>
+              <Instagram size={18} />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/evolvera-club/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--gray-500)] hover:text-[var(--orange)] transition-colors"
+              aria-label="Evolvera on LinkedIn"
+            >
+              <Linkedin size={18} />
+            </a>
           </div>
         </div>
 
-        {/* RIGHT */}
-        <div className="flex flex-col justify-center">
-
-          <span className="text-orange-500 text-xs font-medium tracking-[0.35em] uppercase mb-4">
-            Who We Are
-          </span>
-
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            About <span className="text-orange-500">Evolvera</span>
-          </h1>
-
-          <p className="text-gray-400 text-sm md:text-base font-normal leading-relaxed max-w-xl mb-4">
-            Evolvera is a student-driven technical club focused on innovation,
-            collaboration, and real-world problem solving through modern
-            technologies.
-          </p>
-
-          <p className="text-gray-500 text-sm md:text-base font-normal leading-relaxed max-w-xl">
-            From workshops and hackathons to projects and research, we create
-            opportunities that help students grow beyond academics and
-            into future-ready professionals.
-          </p>
-
-          {/* Accent */}
-          <div className="mt-8 w-24 h-[2px] bg-orange-500/70" />
+        {/* RIGHT — real club photo, plain frame */}
+        <div className="lg:col-span-6">
+          <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-[var(--line)]">
+            <img
+              src="/showcase/team-1.jpg"
+              alt="Evolvera members working together during a session"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover"
+            />
+            <span className="absolute top-4 left-4 w-2 h-2 rounded-full bg-[var(--orange)]" />
+          </div>
         </div>
 
       </div>

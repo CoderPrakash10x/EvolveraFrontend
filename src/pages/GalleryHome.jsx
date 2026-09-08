@@ -1,116 +1,80 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import API from "../utils/api";
 import { Images } from "lucide-react";
+import { optimizeCloudinaryUrl } from "../utils/media";
+import { asArray } from "../utils/normalize";
+import PageHeader from "../components/ui/PageHeader";
+import Container from "../components/ui/Container";
 
 export default function GalleryHome() {
   const [galleries, setGalleries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    API.get("/gallery")
-      .then((res) => setGalleries(res.data))
-      .catch(() => {})
+    API.get("/gallery/public")
+      .then((res) => setGalleries(asArray(res.data)))
+      .catch(() => {
+        setGalleries([]);
+        setError(true);
+      })
       .finally(() => setLoading(false));
   }, []);
 
   return (
-    <section className="bg-black min-h-screen py-32 px-6 text-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="min-h-screen bg-ink text-[#F5F5F5]">
+      <PageHeader eyebrow="Gallery" title="The archive." tone="muted">
+        Relive the moments — every event, every memory, captured and preserved.
+      </PageHeader>
 
-        {/* HEADER */}
-        <div className="mb-20">
-          <div className="flex items-center gap-4 mb-6">
-            <span className="w-12 h-[2px] bg-orange-500" />
-            <span className="text-orange-500 font-bold uppercase tracking-[0.4em] text-xs">
-              Memories
-            </span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tight">
-            Event <span className="text-orange-500">Gallery</span>
-          </h1>
-          <p className="text-gray-500 mt-4 max-w-md text-sm leading-relaxed">
-            Relive the moments — every event, every memory, captured and preserved.
-          </p>
-        </div>
-
-        {/* LOADING */}
+      <Container className="py-16 md:py-24">
         {loading && (
-          <div className="grid md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="rounded-3xl overflow-hidden border border-white/5 animate-pulse">
-                <div className="h-64 bg-zinc-900" />
-                <div className="p-5 bg-zinc-900/50 space-y-2">
-                  <div className="h-4 bg-zinc-800 rounded w-2/3" />
-                  <div className="h-3 bg-zinc-800 rounded w-1/3" />
-                </div>
-              </div>
+          <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="mb-4 h-64 animate-pulse bg-white/5" />
             ))}
           </div>
         )}
 
-        {/* EMPTY */}
-        {!loading && galleries.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-32 text-center">
-            <div className="p-8 rounded-full bg-zinc-900 border border-white/5 mb-6">
-              <Images size={40} className="text-gray-700" />
-            </div>
-            <h3 className="text-xl font-bold text-gray-500 mb-2">No galleries yet</h3>
-            <p className="text-gray-700 text-sm">Check back after events!</p>
+        {error && <p className="text-sm text-red-400">Gallery could not be loaded.</p>}
+
+        {!loading && galleries.length === 0 && !error && (
+          <div className="py-24 text-center text-neutral-500">
+            <Images className="mx-auto mb-4 opacity-40" />
+            <p>No galleries yet. Check back after events.</p>
           </div>
         )}
 
-        {/* GRID */}
         {!loading && galleries.length > 0 && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
             {galleries.map((g, i) => (
-              <motion.div
+              <Link
                 key={g._id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -8 }}
+                to={`/gallery/${g.slug}`}
+                className={`group mb-4 block break-inside-avoid overflow-hidden grayscale transition duration-700 hover:grayscale-0 ${i % 3 === 0 ? "aspect-[4/5]" : "aspect-[4/3]"}`}
               >
-                <Link to={`/gallery/${g.slug}`} className="block group">
-                  <div className="relative rounded-3xl overflow-hidden border border-white/5 hover:border-orange-500/30 transition-all duration-500">
-
-                    {/* IMAGE */}
-                    <div className="relative h-64 overflow-hidden bg-zinc-900">
-                      <img
-                        src={g.cover.url}
-                        alt={g.title}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      {/* OVERLAY */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                      {/* IMAGE COUNT */}
-                      <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1.5 text-xs font-bold">
-                        <Images size={11} className="text-orange-400" />
-                        {g.images.length} photos
-                      </div>
-                    </div>
-
-                    {/* CONTENT */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h2 className="text-xl font-black group-hover:text-orange-500 transition-colors">
-                        {g.title}
-                      </h2>
-                      <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
-                        View Event Photos
-                        <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
-                      </p>
-                    </div>
-
+                <div className="relative h-full bg-neutral-950">
+                  <img
+                    src={optimizeCloudinaryUrl(g.cover?.url, 1000)}
+                    alt={g.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 p-5">
+                    <p className="text-[11px] uppercase tracking-[0.16em] text-orange-500">
+                      {g.imageCount} photos
+                    </p>
+                    <h2 className="mt-1 font-display text-2xl">{g.title}</h2>
                   </div>
-                </Link>
-              </motion.div>
+                </div>
+              </Link>
             ))}
           </div>
         )}
-
-      </div>
+      </Container>
     </section>
   );
 }

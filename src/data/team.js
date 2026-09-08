@@ -1,0 +1,48 @@
+export const newTeam = [
+  { role: "President", name: "Syed Faiz Jamal", dept: "CSE", img: "/NewTeams/Syed.webp" },
+  { role: "Vice President", name: "Asmita Tripathi", dept: "CSE (AI&ML)", img: "/NewTeams/AsmitaTripathi.webp" },
+  { role: "Secretary", name: "Bhupati Khetan", dept: "ECE", img: "/NewTeams/Bhupati.webp" },
+  { role: "Deputy Secretary", name: "Amrita Singh", dept: "CSE", img: "/NewTeams/Amrita.webp" },
+  { role: "Treasurer", name: "Akshay Kumar", dept: "CSE (AI&ML)", img: "/NewTeams/Akshay kumar cse(ai&ml).webp" },
+  { role: "Technical Head", name: "Ayush Kumar", dept: "CSE", img: "/NewTeams/Ayush Kumar.webp" },
+  { role: "Technical Head", name: "Prakash Dubey", dept: "CSE", img: "/NewTeams/prakash Dubey .webp" },
+  { role: "Management Head", name: "Ankita Tripathi", dept: "CSE (AI&ML)", img: "/NewTeams/Ankita.webp" },
+  { role: "Management Head", name: "Alquma Ansari", dept: "CSE (AI&ML)", img: "/NewTeams/Alquma Ansari (CSE AI_ML).webp" },
+  { role: "Management Head", name: "Diwakar Kashyap", dept: "EE", img: "/NewTeams/Diwakar Kashyap(EE).webp" },
+  { role: "Social Media Head", name: "Ashish Nishad", dept: "EE", img: "/NewTeams/Ashish.webp" },
+  { role: "Social Media Head", name: "Ayush Singh", dept: "CSE", img: "/NewTeams/Ayush Singh (CSE).webp" },
+  { role: "Social Media Head", name: "Sanchita Shukla", dept: "CSE (AI&ML)", img: "/NewTeams/Sanchita shukla cse (ai_ml).webp" },
+  { role: "Innovation & Research Head", name: "Harsh Gupta", dept: "AI&ML", img: "/NewTeams/Harsh Gupta(AI-ML).webp" },
+  { role: "Innovation & Research Head", name: "Jhanvi Srivastava", dept: "AI&ML", img: "/NewTeams/Jhanvi Srivastava (AI_ML).webp" },
+  { role: "Innovation & Research Head", name: "Sakshi Srivastav", dept: "ECE", img: "/NewTeams/Sakshi Srivastav (ECE).webp" },
+  { role: "Designing Head", name: "Anmol Verma", dept: "CSE", img: "/NewTeams/Anmol Verma.webp" },
+  { role: "Designing Head", name: "Ayush Gaur", dept: "CSE", img: "/NewTeams/ayush gaur.webp" },
+  { role: "Designing Head", name: "Priyanshu Sonkar", dept: "CSE", img: "/NewTeams/Priyanshu Sonkar.webp" },
+];
+
+export const previousTeam = [
+  { role: "President", name: "Siddhansh Pandey", dept: "CSE (AIML)", img: "/Teams/Siddhansh Pandey.webp" },
+  { role: "Vice President", name: "Jaya Shukla", dept: "CSE (AIML)", img: "/Teams/Jaya Shukla.webp" },
+  { role: "Secretary", name: "Aniket Jaiswal", dept: "CSE (AIML)", img: "/Teams/Aniket Jaiswal.webp" },
+  { role: "Deputy Secretary", name: "Raunak Singh", dept: "CSE (AIML)", img: "/Teams/Raunak Singh.webp" },
+  { role: "Management Head", name: "Akash Sharma", dept: "CSE (AIML)", img: "/Teams/Akash Singh.webp" },
+  { role: "Management Head", name: "Rashmi Singh", dept: "CSE (B2)", img: "/Teams/Rashmi Singh.webp" },
+  { role: "Technical Head", name: "Uday", dept: "CSE (AIML)", img: "/Teams/Uday.webp" },
+  { role: "Technical Head", name: "Ankit Pratap Singh", dept: "CSE (B1)", img: "/Teams/Ankit Pratap Singh.webp" },
+  { role: "Social Media Head", name: "Anurag Singh", dept: "CE", img: "/Teams/Anurak Singh.webp" },
+  { role: "Social Media Head", name: "Sneha Pandey", dept: "EE", img: "/Teams/Sneha Pandey.webp" },
+  { role: "Innovation & Research Head", name: "Vivek Maurya", dept: "CSE (AIML)", img: "/Teams/Vivek Kumar Maurya.webp" },
+  { role: "Innovation & Research Head", name: "Shahnaz Parveen", dept: "CSE (AIML)", img: "/Teams/Shahnaz Parveen.webp" },
+  { role: "Project Head", name: "Omkar Gupta", dept: "ECE", img: "/Teams/Omkar Gupta.webp" },
+  { role: "Project Head", name: "Priyanshi Singh", dept: "CSE (AIML)", img: "/Teams/Priyanshi Singh.webp" },
+];
+
+export const founders = [
+  { role: "President", name: "Shivam Rai", dept: "", img: "/Teams/Shivam Rai.webp" },
+  { role: "Vice President", name: "Najiya", dept: "", img: "/Teams/najiya.webp" },
+  { role: "Secretary", name: "Mohammad Mughees", dept: "", img: "/Teams/Mohammad Mughees.webp" },
+  { role: "Deputy Secretary", name: "Badal Singh", dept: "", img: "/Teams/Badal Singh.webp" },
+  { role: "Technical Head", name: "Shubham Singh", dept: "", img: "/Teams/Shubham Singh.webp" },
+  { role: "Management Head", name: "Halim Khan", dept: "", img: "/Teams/Halim Khan.webp" },
+  { role: "Project Head", name: "Shivesh Tiwari", dept: "", img: "/Teams/Shivesh Tiwari.webp" },
+];
