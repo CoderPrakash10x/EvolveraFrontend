@@ -59,7 +59,7 @@ export default function Team() {
 
       <section className="border-t border-white/10 py-20">
         <Container>
-          <p className="text-[11px] uppercase tracking-[0.28em] text-orange-500">2025 – 2026</p>
+          <p className="text-[11px] uppercase tracking-[0.28em] text-orange-500">2026 – 2027</p>
           <h2 className="mt-4 font-display text-4xl md:text-6xl">Current team.</h2>
           <div className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-2">
             {featured.map((m) => (
@@ -76,7 +76,7 @@ export default function Team() {
 
       <section className="border-t border-white/10 py-20">
         <Container>
-          <p className="text-[11px] uppercase tracking-[0.28em] text-neutral-500">2024 – 2025</p>
+          <p className="text-[11px] uppercase tracking-[0.28em] text-neutral-500">2025 – 2026</p>
           <h2 className="mt-4 font-display text-4xl text-white/80">Previous batch.</h2>
           <div className="mt-14 grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-7">
             {previousTeam.map((m) => (

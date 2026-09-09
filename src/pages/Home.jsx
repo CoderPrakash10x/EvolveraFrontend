@@ -30,10 +30,10 @@ const EXPERIMENTS = [
 ];
 
 const WORK = [
-  { img: "/codecraft - Copy.webp", title: "Code Crafter", meta: "Competitive programming", tone: "text-electric" },
-  { img: "/genai.webp", title: "Generative AI", meta: "Applied machine learning", tone: "text-electric" },
-  { img: "/tech.webp", title: "Systems & software", meta: "Engineering practice", tone: "text-violetsoft" },
-  { img: "/innovation.webp", title: "Innovation lab", meta: "Interdisciplinary builds", tone: "text-violetsoft" },
+  { img: "/Bughunt.png", title: "Bug Hunt", meta: "Competitive programming", tone: "text-electric" },
+  { img: "/ideathon.png", title: "Ideathon", meta: "Communication & Leadership", tone: "text-electric" },
+  { img: "/secretescape.png", title: "Systems & software", meta: "Engineering practice", tone: "text-violetsoft" },
+  { img: "/startup.png", title: "Innovation lab", meta: "Interdisciplinary builds", tone: "text-violetsoft" },
 ];
 
 const BRANCHES = [
@@ -67,20 +67,8 @@ const Home = () => {
     <>
       <HomeEventPopup events={popupEvents} />
       <Hero />
-
-      <section className="relative border-t border-white/10 py-24 md:py-36">
-        <Container>
-          <Reveal>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-zinc-500">02 — Manifesto</p>
-            <h2 className="mt-6 max-w-4xl font-display text-[clamp(2rem,5.5vw,4.6rem)] leading-[1.05] tracking-tight text-[#F5F5F5]">
-              Evolvera is the place where theory is not enough.
-            </h2>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-zinc-400">
-              We exist to close the gap between classrooms and practice. Students from every engineering branch collaborate on AI, software, hardware, and research — building a culture that ships, presents, and learns in public.
-            </p>
-          </Reveal>
-        </Container>
-      </section>
+ <SponsorsMarquee />
+      
 
       <section className="relative overflow-hidden border-t border-white/10 py-24 md:py-32">
         <div className="pointer-events-none absolute inset-0 glow-blue" />
@@ -185,63 +173,24 @@ const Home = () => {
         </Container>
       </section>
 
-      <section className="relative border-t border-white/10 py-24 md:py-32">
+
+     <section className="relative border-t border-white/10 py-24 md:py-36">
         <Container>
-          <SectionHeading index="07" eyebrow="Campus" title="Six branches. One table." />
-          <div className="mt-16 divide-y border-y border-white/10">
-            {BRANCHES.map((b) => (
-              <Reveal key={b.code} className="grid grid-cols-1 items-baseline gap-2 py-8 md:grid-cols-12">
-                <span className="text-sm tabular-nums text-orange-500 md:col-span-1">{b.code}</span>
-                <h3 className="font-display text-2xl text-[#F5F5F5] md:col-span-4">{b.name}</h3>
-                <p className="text-sm leading-relaxed text-zinc-400 md:col-span-7">{b.copy}</p>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="relative overflow-hidden border-t border-white/10 py-24 md:py-32">
-        <div className="pointer-events-none absolute inset-0 glow-amber" />
-        <Container className="relative">
-          <p className="text-[11px] uppercase tracking-[0.28em] text-amberglow">08 — Community</p>
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { n: "06", l: "Engineering branches" },
-              { n: "01", l: "Community" },
-              { n: String(newTeam.length).padStart(2, "0"), l: "Current core team" },
-              { n: String(SPONSORS.length).padStart(2, "0"), l: "Sponsors" },
-            ].map((s) => (
-              <div key={s.l}>
-                <p className="font-display text-6xl tracking-tight text-amberglow md:text-7xl">{s.n}</p>
-                <p className="mt-3 text-sm text-zinc-500">{s.l}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <SponsorsMarquee />
-
-      <section className="relative overflow-hidden border-t border-white/10 py-28 md:py-40">
-        <div className="pointer-events-none absolute inset-0 glow-orange" />
-        <Container className="relative text-center">
           <Reveal>
-            <h2 className="font-display text-[clamp(2.4rem,7vw,6rem)] leading-[0.92] tracking-tight text-[#F5F5F5]">
-              Build beyond
-              <br />
-              the syllabus.
+            <p className="text-[11px] uppercase tracking-[0.28em] text-zinc-500">07 — Manifesto</p>
+            <h2 className="mt-6 max-w-4xl font-display text-[clamp(2rem,5.5vw,4.6rem)] leading-[1.05] tracking-tight text-[#F5F5F5]">
+              Evolvera is the place where theory is not enough.
             </h2>
-            <div className="mt-10 flex justify-center gap-4">
-              <Button to="/contact">
-                Get in touch <ArrowRight size={16} />
-              </Button>
-              <Button to="/events" variant="ghost">
-                Upcoming events
-              </Button>
-            </div>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-zinc-400">
+              We exist to close the gap between classrooms and practice. Students from every engineering branch collaborate on AI, software, hardware, and research — building a culture that ships, presents, and learns in public.
+            </p>
           </Reveal>
         </Container>
       </section>
+
+     
+
+     
 
       <Faq />
     </>

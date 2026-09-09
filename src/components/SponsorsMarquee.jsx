@@ -22,7 +22,7 @@ export default function SponsorsMarquee() {
       <Container>
         <div className="mb-8 flex items-center justify-between">
           <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-orange-500">
-            09 — Sponsors
+            02 — Sponsors
           </p>
           <Link to="/sponsor" className="text-sm text-neutral-400 hover:text-white">
             View all
