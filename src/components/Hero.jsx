@@ -7,20 +7,27 @@ const WireframeScene = lazy(() => import("./WireframeScene"));
 export default function Hero() {
   return (
     <section className="relative isolate min-h-[100svh] overflow-hidden bg-ink">
-      <div className="pointer-events-none absolute inset-0 grid-fine opacity-40" />
-      <div className="pointer-events-none absolute inset-0 glow-orange" />
-      <div className="pointer-events-none absolute inset-0 glow-blue" />
-      <div className="pointer-events-none absolute inset-0 glow-violet opacity-80" />
-      <div className="pointer-events-none absolute inset-0 noise" />
+      
+      {/* Background effects */}
+      <div className="pointer-events-none absolute inset-0 z-0 grid-fine opacity-40" />
+      <div className="pointer-events-none absolute inset-0 z-0 glow-orange" />
+      <div className="pointer-events-none absolute inset-0 z-0 glow-blue" />
+      <div className="pointer-events-none absolute inset-0 z-0 glow-violet opacity-80" />
+      <div className="pointer-events-none absolute inset-0 z-0 noise" />
 
-      <div className="pointer-events-none absolute inset-0 opacity-70">
+      {/* THREE.JS SCENE */}
+      <div className="pointer-events-none absolute inset-0 z-[1] h-full w-full">
         <Suspense fallback={null}>
           <WireframeScene />
         </Suspense>
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/15" />
 
-      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-6 pb-16 pt-28 md:justify-center md:pb-24 md:pt-32">
+      {/* Dark overlay - IMPORTANT: don't make it too strong */}
+      <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-r from-ink via-ink/70 to-ink/10" />
+
+      {/* Content */}
+      <div className="relative z-[3] mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-6 pb-16 pt-28 md:justify-center md:pb-24 md:pt-32">
+        
         <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.28em] text-orange-500">
           KIPM College · Student engineering society
         </p>
@@ -30,14 +37,19 @@ export default function Hero() {
         </h1>
 
         <p className="mt-8 max-w-xl text-lg leading-relaxed text-zinc-300 md:text-xl">
-          Six engineering branches. One community. Real projects, AI, and innovation — engineering beyond the syllabus.
+          Six engineering branches. One community. Real projects, AI, and
+          innovation — engineering beyond the syllabus.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
           <Button to="/events">
             View events
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight
+              size={16}
+              className="transition-transform group-hover:translate-x-0.5"
+            />
           </Button>
+
           <Button to="/about" variant="ghost">
             About the club
           </Button>
@@ -48,13 +60,19 @@ export default function Hero() {
             <dt>Campus</dt>
             <dd className="mt-1 text-[#F5F5F5]">Gorakhpur</dd>
           </div>
+
           <div>
             <dt>Branches</dt>
-            <dd className="mt-1 text-[#F5F5F5]">CSE · ECE · ME · CE · EE · AI</dd>
+            <dd className="mt-1 text-[#F5F5F5]">
+              CSE · ECE · ME · CE · EE · AI
+            </dd>
           </div>
+
           <div>
             <dt>Focus</dt>
-            <dd className="mt-1 text-[#F5F5F5]">Build, ship, learn</dd>
+            <dd className="mt-1 text-[#F5F5F5]">
+              Build, ship, learn
+            </dd>
           </div>
         </dl>
       </div>
