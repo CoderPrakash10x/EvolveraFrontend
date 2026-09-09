@@ -36,29 +36,36 @@ const Events = () => {
   }, []);
 
   const fetchEvents = async () => {
-    try {
-      const data = await getAdminEvents();
+  try {
+    const data = await getAdminEvents();
 
-      console.log("ADMIN EVENTS RESPONSE:", data);
-      console.log("FIRST EVENT:", data?.[0]);
+    console.log("ADMIN EVENTS RESPONSE:", data);
+    console.log("FIRST EVENT:", data?.[0]);
 
-      const normalizedEvents = Array.isArray(data)
-        ? data.map((event) => ({
+    const normalizedEvents = Array.isArray(data)
+      ? data
+          .map((event) => ({
             ...(event?._doc || {}),
             ...event,
           }))
-        : [];
+          .sort((a, b) => {
+            return (
+              new Date(b.createdAt || b.eventStartAt || 0) -
+              new Date(a.createdAt || a.eventStartAt || 0)
+            );
+          })
+      : [];
 
-      console.log("NORMALIZED EVENTS:", normalizedEvents);
+    console.log("SORTED EVENTS:", normalizedEvents);
 
-      setEvents(normalizedEvents);
-    } catch (err) {
-      console.error("FETCH EVENTS ERROR:", err);
-      toast.error("Failed to load events");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setEvents(normalizedEvents);
+  } catch (err) {
+    console.error("FETCH EVENTS ERROR:", err);
+    toast.error("Failed to load events");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchEvents();
