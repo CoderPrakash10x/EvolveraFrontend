@@ -43,7 +43,7 @@ export default function About() {
         <Container className="relative grid gap-16 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
             <div className="grid grid-cols-2 gap-3">
-              <img src="/card1.webp" alt="Evolvera workshop" className="h-64 w-full object-cover" />
+              <img src="/card1.jpg" alt="Evolvera workshop" className="h-64 w-full object-cover" />
               <img src="/card2.webp" alt="Evolvera community" className="mt-10 h-64 w-full object-cover" />
             </div>
           </Reveal>
