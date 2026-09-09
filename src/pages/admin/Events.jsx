@@ -11,16 +11,30 @@ const Events = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchEvents = async () => {
-    try {
-      const data = await getAdminEvents();
-      setEvents(data);
-    } catch (err) {
-      toast.error("Failed to load events");
-    } finally {
-      setLoading(false);
-    }
-  };
+ const fetchEvents = async () => {
+  try {
+    const data = await getAdminEvents();
+
+    console.log("ADMIN EVENTS RESPONSE:", data);
+    console.log("FIRST EVENT:", data?.[0]);
+
+    const normalizedEvents = Array.isArray(data)
+      ? data.map((event) => ({
+          ...(event._doc || {}),
+          ...event,
+        }))
+      : [];
+
+    console.log("NORMALIZED EVENTS:", normalizedEvents);
+
+    setEvents(normalizedEvents);
+  } catch (err) {
+    console.error("FETCH EVENTS ERROR:", err);
+    toast.error("Failed to load events");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchEvents();
