@@ -112,7 +112,13 @@ export default function Events() {
 
   const list = Array.isArray(events) ? events : [];
   const upcomingEvents = list.filter((e) => e.status !== "past");
-  const pastEvents = list.filter((e) => e.status === "past");
+  const pastEvents = list
+  .filter((e) => e.status === "past")
+  .sort(
+    (a, b) =>
+      new Date(b.eventStartAt).getTime() -
+      new Date(a.eventStartAt).getTime()
+  );
 
   return (
     <section className="min-h-screen bg-ink text-[#F5F5F5]">
